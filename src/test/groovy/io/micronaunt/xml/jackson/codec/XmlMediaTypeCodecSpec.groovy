@@ -18,7 +18,7 @@ package io.micronaunt.xml.jackson.codec
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.MediaType
-import io.micronaut.xml.codec.XmlMediaTypeCodec
+import io.micronaut.xml.jackson.codec.XmlMediaTypeCodec
 import spock.lang.Specification
 
 class XmlMediaTypeCodecSpec extends Specification {
