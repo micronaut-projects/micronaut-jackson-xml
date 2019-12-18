@@ -82,7 +82,7 @@ tasks.withType(Test) {
 task allDeps(type: DependencyReportTask) {}
 
 checkstyle {
-    toolVersion = 8.10
+    toolVersion = 8.16
     configFile = file("${projectDir}/config/checkstyle/checkstyle.xml")
 
     // Per submodule
