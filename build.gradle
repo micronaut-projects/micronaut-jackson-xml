@@ -83,7 +83,7 @@ task allDeps(type: DependencyReportTask) {}
 
 checkstyle {
     toolVersion = 8.10
-    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    configFile = file("${projectDir}/config/checkstyle/checkstyle.xml")
 
     // Per submodule
     maxErrors = 0
