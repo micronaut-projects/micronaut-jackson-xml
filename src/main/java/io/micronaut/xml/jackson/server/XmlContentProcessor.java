@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server;
+package io.micronaut.xml.jackson.server;
 
 import io.micronaut.http.server.HttpServerConfiguration;
 import io.micronaut.http.server.netty.AbstractBufferingHttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
-import io.micronaut.xml.server.convert.ByteArrayXmlStreamReader;
+import io.micronaut.xml.jackson.server.convert.ByteArrayXmlStreamReader;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import org.reactivestreams.Subscriber;
@@ -35,7 +35,7 @@ import java.io.IOException;
  *
  * @author Sergey Vishnyakov
  * @author James Kleeh
- * @since 1.3.0
+ * @since 1.0.0
  */
 public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<Object> {
 

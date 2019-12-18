@@ -1,3 +1,4 @@
+package io.micronaunt.xml.jackson.server
 /*
  * Copyright 2017-2019 original authors
  *

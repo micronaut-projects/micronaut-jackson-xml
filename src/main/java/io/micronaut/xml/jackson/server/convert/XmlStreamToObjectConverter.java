@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server.convert;
+package io.micronaut.xml.jackson.server.convert;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.core.annotation.Internal;
@@ -29,7 +29,7 @@ import java.util.Optional;
  * Converts {@link ByteArrayXmlStreamReader} to object.
  *
  * @author Sergey Vishnyakov
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Singleton
 @Internal

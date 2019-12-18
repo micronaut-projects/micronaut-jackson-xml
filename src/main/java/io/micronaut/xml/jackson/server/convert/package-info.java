@@ -18,6 +18,6 @@
  * Classes and interfaces related to binding XML to objects.
  *
  * @author James Kleeh
- * @since 1.3.0
+ * @since 1.0.0
  */
-package io.micronaut.xml.server.convert;
+package io.micronaut.xml.jackson.server.convert;

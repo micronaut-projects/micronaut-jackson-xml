@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server;
+package io.micronaut.xml.jackson.server;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.MediaType;
@@ -29,7 +29,7 @@ import javax.inject.Singleton;
  * Builds the {@link org.reactivestreams.Subscriber} for XML requests.
  *
  * @author Sergey Vishnyakov
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_XHTML, MediaType.TEXT_XML})
 @Singleton

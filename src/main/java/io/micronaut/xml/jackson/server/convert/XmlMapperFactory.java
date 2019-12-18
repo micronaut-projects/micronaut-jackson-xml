@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server.convert;
+package io.micronaut.xml.jackson.server.convert;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
@@ -40,7 +40,7 @@ import java.util.TimeZone;
  * of {@link io.micronaut.jackson.ObjectMapperFactory}.
  *
  * @author Sergey Vishnyakov
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Factory
 @BootstrapContextCompatible

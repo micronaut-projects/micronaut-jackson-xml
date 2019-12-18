@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server.convert;
+package io.micronaut.xml.jackson.server.convert;
 
 import io.micronaut.core.annotation.Internal;
 
@@ -28,7 +28,7 @@ import java.io.InputStream;
  * Stream reader that pairs xml stream with underlying byte array.
  *
  * @author Sergey Vishnyakov
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Internal
 public final class ByteArrayXmlStreamReader extends StreamReaderDelegate implements AutoCloseable {

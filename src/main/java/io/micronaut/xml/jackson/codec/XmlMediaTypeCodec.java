@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.codec;
+package io.micronaut.xml.jackson.codec;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
@@ -31,7 +31,7 @@ import javax.inject.Singleton;
  * A jackson based {@link io.micronaut.http.codec.MediaTypeCodec} that handles XML requests/responses.
  *
  * @author Sergey Vishnyakov
- * @since 1.3.0
+ * @since 1.0.0
  */
 @Named("xml")
 @Singleton

@@ -1,13 +1,116 @@
-dependencies {
-    annotationProcessor project(":inject-java")
-    api dependencyModuleVersion('jackson.dataformat', 'jackson-dataformat-xml')
-    api project(":inject")
-    api project(":http")
-    compileOnly project(":http-server-netty")
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
 
-    testCompileOnly project(":inject-groovy")
-    testImplementation project(":inject")
-    testImplementation project(":http-client")
-    testImplementation project(":runtime")
-    testImplementation project(":http-server-netty")
+plugins {
+    id 'com.github.hierynomus.license' version '0.15.0'
+    id 'idea'
+    id 'groovy'
+    id 'java-library'
+    id 'com.adarshr.test-logger' version '2.0.0'
+    id 'checkstyle'
+}
+
+repositories {
+    jcenter()
+    maven { url "https://oss.jfrog.org/oss-snapshot-local/" }
+}
+
+version project.projectVersion
+group "io.micronaut.xml"
+
+idea {
+    module {
+        outputDir file('build/classes/java/main')
+        testOutputDir file('build/classes/groovy/test')
+    }
+}
+apply from: rootProject.file('gradle/license.gradle')
+
+testlogger {
+    showFullStackTraces true
+    showStandardStreams true
+    showPassedStandardStreams false
+    showSkippedStandardStreams false
+    showFailedStandardStreams true
+}
+
+ext {
+    isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options.compilerArgs.add '-parameters'
+compileTestJava.options.compilerArgs.add '-parameters'
+
+apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/3ca806eb776b72483a4c0fda5ff1a5caebe0c281/publishing.gradle"
+
+jar {
+    manifest {
+        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+        attributes('Implementation-Version': projectVersion)
+        attributes('Implementation-Title': title)
+    }
+}
+
+bintray.publish = true
+
+tasks.withType(Test) {
+    jvmArgs '-Duser.country=US'
+    jvmArgs '-Duser.language=en'
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    afterSuite {
+        System.out.print(".")
+        System.out.flush()
+    }
+
+    reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
+    reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
+}
+
+task allDeps(type: DependencyReportTask) {}
+
+checkstyle {
+    toolVersion = 8.10
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
+    // Per submodule
+    maxErrors = 0
+    maxWarnings = 10
+
+    showViolations = true
+}
+
+checkstyleTest.enabled = false
+
+dependencies {
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    api platform("io.micronaut:micronaut-bom:$micronautVersion")
+    api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"
+    api "io.micronaut:micronaut-inject"
+    api "io.micronaut:micronaut-http"
+
+    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    compileOnly "io.micronaut:micronaut-http-server-netty"
+
+    testCompileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testImplementation "io.micronaut:micronaut-inject"
+    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation "io.micronaut:micronaut-runtime"
+    testImplementation "io.micronaut:micronaut-http-server-netty"
 }

@@ -18,6 +18,6 @@
  * Classes and interfaces related to encoding and decoding XML.
  *
  * @author James Kleeh
- * @since 1.3.0
+ * @since 1.0.0
  */
-package io.micronaut.xml.codec;
+package io.micronaut.xml.jackson.codec;

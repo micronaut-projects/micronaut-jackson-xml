@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.xml.server.convert;
+package io.micronaut.xml.jackson.server.convert;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,7 +39,7 @@ import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
  * @param <V> The generic type for values
  * @author Sergey Vishnyakov
  * @author James Kleeh
- * @since 1.3.0
+ * @since 1.0.0
  */
 public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.micronaunt.xml.server
+package io.micronaunt.xml.jackson.server
 
 
 import io.micronaut.context.ApplicationContext
