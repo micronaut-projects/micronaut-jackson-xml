@@ -1,0 +1,8 @@
+Micronaut Jackson XML
+
+[![Build Status](https://github.com/micronaut-projects/micronaut-jackson-xml/workflows/Java%20CI/badge.svg)](https://github.com/micronaut-projects/micronaut-jackson-xml/actions)
+
+When this library is added to a Micronaut application, it creates the beans necessary to allow for the serialization and deserialization of XML. Both the client and server are supported in a similar manner to the standard support of JSON. Jackson is used to do the conversion of the XML to objects.
+
+Because XML has no array boundaries, the entire request body must be buffered into memory before deserialization can occur. The standard request body size limits apply here as well.
+
