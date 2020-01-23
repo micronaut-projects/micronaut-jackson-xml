@@ -10,9 +10,21 @@ Because XML has no array boundaries, the entire request body must be buffered in
 
 ## Documentation
 
-See the [Documentation](https://micronaut-projects.github.io/micronaut-jackson-xml/latest/guide) for more information.
+Simply add the dependency to your Micronaut project. For example in Gradle:
 
-See the [Snapshot Documentation](https://micronaut-projects.github.io/micronaut-jackson-xml/snapshot/guide) for the current development docs.
+```groovy
+implementation "io.micronaut.xml:micronaut-jackson-xml"
+````
+
+or Maven:
+
+```xml
+<dependency>
+  <groupId>io.micronaut.xml</groupId>
+  <artifactId>micronaut-jackson-xml</artifactId>
+  <scope>runtime</scope>
+</dependency>
+```
 
 ## Snapshots and Releases
 
