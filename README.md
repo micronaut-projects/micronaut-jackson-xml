@@ -26,6 +26,8 @@ or Maven:
 </dependency>
 ```
 
+See the [Jackson XML](https://github.com/FasterXML/jackson-dataformat-xml) documentation for more information.
+
 ## Snapshots and Releases
 
 Snaphots are automatically published to [JFrog OSS](https://oss.jfrog.org/artifactory/oss-snapshot-local/) using [Github Actions](https://github.com/micronaut-projects/micronaut-aws/actions).
