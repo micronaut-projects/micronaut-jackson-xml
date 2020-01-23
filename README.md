@@ -10,7 +10,7 @@ Because XML has no array boundaries, the entire request body must be buffered in
 
 ## Documentation
 
-Simply add the dependency to your Micronaut project. For example in Gradle:
+Simply add the dependency to your Micronaut 1.3 or above project. For example in Gradle:
 
 ```groovy
 implementation "io.micronaut.xml:micronaut-jackson-xml"
