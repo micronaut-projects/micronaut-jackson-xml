@@ -1,1 +1,3 @@
-rootProject.name = "jackson-xml"
+rootProject.name = "micronaut-jackson-xml"
+
+include 'jackson-xml'
