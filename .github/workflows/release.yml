@@ -17,9 +17,18 @@ jobs:
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew bintrayUpload
+        run: ./gradlew bintrayUpload docs
       - id: release_version
         run: echo ::set-output name=release_version::${GITHUB_REF:11}
+      - name: Publish to Github Pages
+        if: success()
+        uses: micronaut-projects/github-pages-deploy-action@master
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: build/docs
+          VERSION: ${{ steps.release_version.outputs.release_version }}
       - name: Synchronize Maven Central
         if: success()
         env:
