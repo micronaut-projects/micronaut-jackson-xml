@@ -1,3 +1,0 @@
-Snaphots are automatically published to https://oss.jfrog.org/artifactory/oss-snapshot-local/[JFrog OSS] using https://github.com/micronaut-projects/micronaut-jackson-xml/actions[Github Actions].
-
-See the documentation in the https://docs.micronaut.io/latest/guide/index.html#usingsnapshots[Micronaut Docs] for how to configure your build to use snapshots.
