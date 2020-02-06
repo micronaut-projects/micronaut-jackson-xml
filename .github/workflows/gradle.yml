@@ -33,7 +33,7 @@ jobs:
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
         run: ./gradlew publish docs
       - name: Publish to Github Pages
-        if: success() && github.event_name == 'push' && matrix.java == '1.8'
+        if: success() && github.event_name == 'push' && matrix.java == '8'
         uses: micronaut-projects/github-pages-deploy-action@master
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
