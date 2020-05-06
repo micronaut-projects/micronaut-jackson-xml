@@ -54,7 +54,7 @@ public class XmlMediaTypeCodec extends JacksonMediaTypeCodec {
 
     @Override
     public JacksonMediaTypeCodec cloneWithFeatures(JacksonFeatures jacksonFeatures) {
-        ObjectMapper objectMapper = this.objectMapper.copy();
+        ObjectMapper objectMapper = this.getObjectMapper().copy();
         jacksonFeatures.getDeserializationFeatures().forEach(objectMapper::configure);
         jacksonFeatures.getSerializationFeatures().forEach(objectMapper::configure);
 
