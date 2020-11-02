@@ -1,0 +1,6 @@
+jackson:
+  xml:
+    parser:
+      empty-element-as-null: false
+    generator:
+      write-xml-declaration: true
