@@ -193,7 +193,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>com.fasterxml.jackson.dataformat.xml.XmlMapper</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/xml/jackson/server/convert/XmlMapperFactory.html#xmlMapper-io.micronaut.jackson.JacksonConfiguration-">xmlMapper</a></span>(io.micronaut.jackson.JacksonConfiguration&nbsp;jacksonConfiguration)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/xml/jackson/server/convert/XmlMapperFactory.html#xmlMapper-io.micronaut.jackson.JacksonConfiguration-io.micronaut.xml.jackson.JacksonXmlConfiguration-">xmlMapper</a></span>(io.micronaut.jackson.JacksonConfiguration&nbsp;jacksonConfiguration,
+         <a href="../../../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html" title="class in io.micronaut.xml.jackson">JacksonXmlConfiguration</a>&nbsp;xmlConfiguration)</code>
 <div class="block">Builds the core Jackson <code>ObjectMapper</code> from the optional configuration and <code>JsonFactory</code>.</div>
 </td>
 </tr>
@@ -294,7 +295,7 @@ protected&nbsp;com.fasterxml.jackson.databind.deser.BeanDeserializerModifier[] b
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="xmlMapper-io.micronaut.jackson.JacksonConfiguration-">
+<a name="xmlMapper-io.micronaut.jackson.JacksonConfiguration-io.micronaut.xml.jackson.JacksonXmlConfiguration-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -303,7 +304,9 @@ protected&nbsp;com.fasterxml.jackson.databind.deser.BeanDeserializerModifier[] b
 <pre>@Singleton
  @Named(value="xml")
 public&nbsp;com.fasterxml.jackson.dataformat.xml.XmlMapper&nbsp;xmlMapper(@Nullable
-                                                                                                io.micronaut.jackson.JacksonConfiguration&nbsp;jacksonConfiguration)</pre>
+                                                                                                io.micronaut.jackson.JacksonConfiguration&nbsp;jacksonConfiguration,
+                                                                                                @Nullable
+                                                                                                <a href="../../../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html" title="class in io.micronaut.xml.jackson">JacksonXmlConfiguration</a>&nbsp;xmlConfiguration)</pre>
 <div class="block">Builds the core Jackson <code>ObjectMapper</code> from the optional configuration and <code>JsonFactory</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
