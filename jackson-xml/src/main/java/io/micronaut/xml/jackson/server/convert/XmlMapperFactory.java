@@ -23,6 +23,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.jackson.JacksonConfiguration;
+import io.micronaut.xml.jackson.JacksonXmlConfiguration;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -71,7 +72,7 @@ public class XmlMapperFactory {
     @Singleton
     @BootstrapContextCompatible
     @Named("xml")
-    public XmlMapper xmlMapper(@Nullable JacksonConfiguration jacksonConfiguration) {
+    public XmlMapper xmlMapper(@Nullable JacksonConfiguration jacksonConfiguration, @Nullable JacksonXmlConfiguration xmlConfiguration) {
 
         XmlMapper objectMapper = new XmlMapper();
 
@@ -126,6 +127,12 @@ public class XmlMapperFactory {
             jacksonConfiguration.getParserSettings().forEach(objectMapper::configure);
             jacksonConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
         }
+
+        if (xmlConfiguration != null) {
+            xmlConfiguration.getParserSettings().forEach(objectMapper::configure);
+            xmlConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
+        }
+
         return objectMapper;
     }
 }

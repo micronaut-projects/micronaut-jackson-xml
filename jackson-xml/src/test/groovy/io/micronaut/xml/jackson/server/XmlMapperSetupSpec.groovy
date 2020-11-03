@@ -38,4 +38,16 @@ class XmlMapperSetupSpec extends Specification {
         mapper.readTree('<person><name>test</name></person>').get('name').textValue() == 'test'
         mapper.writeValueAsString(['1', '2', '3']) == '<ArrayList><item>1</item><item>2</item><item>3</item></ArrayList>'
     }
+
+    void 'verify can set xml features'() {
+        when: "Object Mapper is configured with non-default XML features"
+        ApplicationContext applicationContext = ApplicationContext.run('test', 'xml').start()
+        ObjectMapper mapper = applicationContext.getBean(ObjectMapper, Qualifiers.byName('xml'))
+
+        then: "parsing an empty element yields an empty string instead of null"
+        mapper.readTree('<person><name/></person>').get('name').textValue() == ''
+
+        and: "generated XML is prefixed with XML declaration"
+        mapper.writeValueAsString(['1']) == "<?xml version='1.0' encoding='UTF-8'?><ArrayList><item>1</item></ArrayList>"
+    }
 }
