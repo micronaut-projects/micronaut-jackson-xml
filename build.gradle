@@ -10,7 +10,6 @@ buildscript {
     }
 }
 subprojects { Project subproject ->
-
     group "io.micronaut.xml"
 
     apply plugin: "io.micronaut.build.common"
