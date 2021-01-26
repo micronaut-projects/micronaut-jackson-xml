@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -159,12 +159,22 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html#getParserSettings--">getParserSettings</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html#isDefaultUseWrapper--">isDefaultUseWrapper</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html#setDefaultUseWrapper-boolean-">setDefaultUseWrapper</a></span>(boolean&nbsp;state)</code>
+<div class="block">Define if a wrapper will be used for indexed (List, array) properties or not by default.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html#setGenerator-java.util.Map-">setGenerator</a></span>(java.util.Map&lt;com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator.Feature,java.lang.Boolean&gt;&nbsp;generator)</code>
 <div class="block">Sets the generator features to use.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/xml/jackson/JacksonXmlConfiguration.html#setParser-java.util.Map-">setParser</a></span>(java.util.Map&lt;com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser.Feature,java.lang.Boolean&gt;&nbsp;parser)</code>
 <div class="block">Sets the parser features to use.</div>
@@ -252,7 +262,7 @@ extends java.lang.Object</pre>
 <a name="setGenerator-java.util.Map-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setGenerator</h4>
 <pre>public&nbsp;void&nbsp;setGenerator(java.util.Map&lt;com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator.Feature,java.lang.Boolean&gt;&nbsp;generator)</pre>
@@ -260,6 +270,33 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>generator</code> - The generator features</dd>
+</dl>
+</li>
+</ul>
+<a name="isDefaultUseWrapper--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDefaultUseWrapper</h4>
+<pre>public&nbsp;boolean&nbsp;isDefaultUseWrapper()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if default wrapper is used</dd>
+</dl>
+</li>
+</ul>
+<a name="setDefaultUseWrapper-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setDefaultUseWrapper</h4>
+<pre>public&nbsp;void&nbsp;setDefaultUseWrapper(boolean&nbsp;state)</pre>
+<div class="block">Define if a wrapper will be used for indexed (List, array) properties or not by default.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>state</code> - True if wrapping is used by default</dd>
 </dl>
 </li>
 </ul>
