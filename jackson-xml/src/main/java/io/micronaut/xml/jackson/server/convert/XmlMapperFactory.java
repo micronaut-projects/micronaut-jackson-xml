@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
@@ -67,6 +68,7 @@ public class XmlMapperFactory {
      * Builds the core Jackson {@link ObjectMapper} from the optional configuration and {@link com.fasterxml.jackson.core.JsonFactory}.
      *
      * @param jacksonConfiguration The configuration
+     * @param xmlConfiguration The XML configuration
      * @return The {@link ObjectMapper}
      */
     @Singleton
@@ -74,7 +76,13 @@ public class XmlMapperFactory {
     @Named("xml")
     public XmlMapper xmlMapper(@Nullable JacksonConfiguration jacksonConfiguration, @Nullable JacksonXmlConfiguration xmlConfiguration) {
 
-        XmlMapper objectMapper = new XmlMapper();
+        final boolean hasXmlConfiguration = xmlConfiguration != null;
+        JacksonXmlModule xmlModule = new JacksonXmlModule();
+        if (hasXmlConfiguration) {
+            xmlModule.setDefaultUseWrapper(xmlConfiguration.isDefaultUseWrapper());
+        }
+
+        XmlMapper objectMapper = new XmlMapper(xmlModule);
 
         final boolean hasConfiguration = jacksonConfiguration != null;
         if (!hasConfiguration || jacksonConfiguration.isModuleScan()) {
@@ -128,7 +136,7 @@ public class XmlMapperFactory {
             jacksonConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
         }
 
-        if (xmlConfiguration != null) {
+        if (hasXmlConfiguration) {
             xmlConfiguration.getParserSettings().forEach(objectMapper::configure);
             xmlConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
         }
