@@ -1,6 +1,6 @@
 package io.micronaut.xml.jackson.server
 /*
- * Copyright 2017-2019 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,5 +49,35 @@ class XmlMapperSetupSpec extends Specification {
 
         and: "generated XML is prefixed with XML declaration"
         mapper.writeValueAsString(['1']) == "<?xml version='1.0' encoding='UTF-8'?><ArrayList><item>1</item></ArrayList>"
+    }
+
+    void 'verify can disable to use wrapper by default'() {
+        when: "Object Mapper is configured with non-default using wrapper"
+        ApplicationContext applicationContext = ApplicationContext.run(["jackson.xml.defaultUseWrapper": false], 'test', 'xml').start()
+        ObjectMapper mapper = applicationContext.getBean(ObjectMapper, Qualifiers.byName('xml'))
+
+        then: "define class and serialize to XML using mappers"
+        Container container = new Container(["A", "B"])
+        mapper.writeValueAsString(container) ==
+                "<?xml version='1.0' encoding='UTF-8'?><Container><items>A</items><items>B</items></Container>"
+    }
+
+    void 'verify can enable to use wrapper by default'() {
+        when: "Object Mapper is configured with non-default using wrapper"
+        ApplicationContext applicationContext = ApplicationContext.run(["jackson.xml.defaultUseWrapper": true], 'test', 'xml')
+        ObjectMapper mapper = applicationContext.getBean(ObjectMapper, Qualifiers.byName('xml'))
+
+        then: "define class and serialize to XML using mappers"
+        Container container = new Container(["A", "B"])
+        mapper.writeValueAsString(container) ==
+                "<?xml version='1.0' encoding='UTF-8'?><Container><items><items>A</items><items>B</items></items></Container>"
+    }
+
+    static class Container {
+        List<String> items
+
+        Container(List<String> items) {
+            this.items = items
+        }
     }
 }

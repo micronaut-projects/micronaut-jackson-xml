@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.xml.jackson;
 
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
 import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import io.micronaut.context.annotation.ConfigurationProperties;
@@ -38,6 +39,7 @@ import java.util.Map;
 public class JacksonXmlConfiguration {
     private Map<FromXmlParser.Feature, Boolean> parser = Collections.emptyMap();
     private Map<ToXmlGenerator.Feature, Boolean> generator = Collections.emptyMap();
+    private boolean defaultUseWrapper = JacksonXmlAnnotationIntrospector.DEFAULT_USE_WRAPPER;
 
     /**
      * @return Settings for the parser
@@ -71,5 +73,20 @@ public class JacksonXmlConfiguration {
         if (CollectionUtils.isNotEmpty(generator)) {
             this.generator = generator;
         }
+    }
+
+    /**
+     * @return True if default wrapper is used
+     * */
+    public boolean isDefaultUseWrapper() {
+        return defaultUseWrapper;
+    }
+
+    /**
+     * Define if a wrapper will be used for indexed (List, array) properties or not by default.
+     * @param state True if wrapping is used by default
+     */
+    public void setDefaultUseWrapper(boolean state) {
+        this.defaultUseWrapper = state;
     }
 }
