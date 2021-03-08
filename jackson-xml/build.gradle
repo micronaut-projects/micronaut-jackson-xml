@@ -4,7 +4,7 @@ dependencies {
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
 
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
-    api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1"
+    api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.2"
     api "io.micronaut:micronaut-inject:$micronautVersion"
     api "io.micronaut:micronaut-http:$micronautVersion"
 
