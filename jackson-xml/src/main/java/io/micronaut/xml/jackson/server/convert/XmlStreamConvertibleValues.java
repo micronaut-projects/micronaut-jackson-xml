@@ -18,7 +18,7 @@ package io.micronaut.xml.jackson.server.convert;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import io.micronaut.core.async.SupplierUtil;
+import io.micronaut.core.util.SupplierUtil;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.convert.value.ConvertibleValues;
