@@ -24,8 +24,8 @@ import io.micronaut.jackson.codec.JacksonMediaTypeCodec;
 import io.micronaut.jackson.codec.JacksonFeatures;
 import io.micronaut.runtime.ApplicationConfiguration;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 
 /**
  * A jackson based {@link io.micronaut.http.codec.MediaTypeCodec} that handles XML requests/responses.
