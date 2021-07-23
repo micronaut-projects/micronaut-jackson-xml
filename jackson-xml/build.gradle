@@ -8,6 +8,8 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"
 
+    testImplementation "io.projectreactor:reactor-core"
+
     compileOnly "io.micronaut:micronaut-http-server-netty"
 
     testCompileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")

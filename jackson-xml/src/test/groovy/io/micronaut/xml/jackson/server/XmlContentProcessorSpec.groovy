@@ -18,16 +18,18 @@ package io.micronaut.xml.jackson.server
 
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
-import io.micronaut.http.client.RxHttpClient
-import io.micronaut.http.client.RxStreamingHttpClient
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.StreamingHttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import io.reactivex.Flowable
+import org.reactivestreams.Publisher
+import reactor.core.publisher.Flux
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -39,12 +41,12 @@ class XmlContentProcessorSpec extends Specification {
     @Shared @AutoCleanup EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer, [:])
 
     void "test sending a single book"() {
-        RxHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
-        List<Book> books = client.retrieve(
+        List<Book> books = client.toBlocking().retrieve(
                 HttpRequest.POST("/xml/stream", '<book><title>First Book</title></book>')
-                        .contentType(MediaType.TEXT_XML_TYPE), Book.class).toList().blockingGet()
+                        .contentType(MediaType.TEXT_XML_TYPE), Argument.listOf(Book.class))
 
         then:
         books.size() == 1
@@ -52,12 +54,13 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test sending a list of books"() {
-        RxStreamingHttpClient client = embeddedServer.applicationContext.createBean(RxStreamingHttpClient, embeddedServer.getURL())
+        given:
+        StreamingHttpClient client = embeddedServer.applicationContext.createBean(StreamingHttpClient, embeddedServer.getURL())
 
         when:
-        List<Book> books = client.jsonStream(
+        List<Book> books = Flux.from(client.jsonStream(
                 HttpRequest.POST("/xml/stream/list", '<books><book><title>First Book</title></book><book><title>Second Book</title></book></books>')
-                        .contentType(MediaType.TEXT_XML_TYPE), Book.class).toList().blockingGet()
+                        .contentType(MediaType.TEXT_XML_TYPE), Book.class)).collectList().block()
 
         then:
         books.size() == 2
@@ -66,7 +69,7 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test sending a blocking author"() {
-        RxHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
         Author author = client.toBlocking().retrieve(
@@ -80,7 +83,7 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test sending a blocking author with 2 books"() {
-        RxHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
         Author author = client.toBlocking().retrieve(
@@ -95,7 +98,7 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test mapping xml single primitive field to controller param"() {
-        RxHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
         String name = client.toBlocking().retrieve(
@@ -107,7 +110,7 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test mapping xml single complex field to controller param"() {
-        RxHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
         Book book = client.toBlocking().retrieve(
@@ -119,12 +122,13 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test mapping xml list field to controller param"() {
-        RxStreamingHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        given:
+        StreamingHttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
-        List<Book> books = client.jsonStream(
+        List<Book> books = Flux.from(client.jsonStream(
                 HttpRequest.POST("/xml/stream/author/books", '<author name="Joe"><books><book><title>First Book</title></book><book><title>Second Book</title></book></books></author>')
-                        .contentType(MediaType.TEXT_XML_TYPE)).toList().blockingGet();
+                        .contentType(MediaType.TEXT_XML_TYPE))).collectList().block()
 
         then:
         books.size() == 2
@@ -133,14 +137,15 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test binding xml set field to controller param"() {
-        RxStreamingHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        given:
+        StreamingHttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
-        Set<String> books = client.jsonStream(
+        Set<String> books = Flux.from(client.jsonStream(
                 HttpRequest.POST("/xml/stream/author/bookSet", '<author name="Joe"><books><book><title>First Book</title></book><book><title>Second Book</title></book></books></author>')
-                        .contentType(MediaType.TEXT_XML_TYPE))
-                .toList()
-                .blockingGet()
+                        .contentType(MediaType.TEXT_XML_TYPE)))
+                .collectList()
+                .block()
                 .stream()
                 .map{book -> book.title}
                 .collect(Collectors.toSet())
@@ -152,7 +157,8 @@ class XmlContentProcessorSpec extends Specification {
     }
 
     void "test binding two fields to controller parameters"() {
-        RxStreamingHttpClient client = embeddedServer.applicationContext.createBean(RxHttpClient, embeddedServer.getURL())
+        given:
+        StreamingHttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
 
         when:
         Author author = client.toBlocking().retrieve(
@@ -168,14 +174,14 @@ class XmlContentProcessorSpec extends Specification {
     static class StreamController {
 
         @Post
-        Flowable<Book> stream(@Body Flowable<Book> books) {
+        Publisher<Book> stream(@Body Publisher<Book> books) {
             return books
         }
 
         @Post("/list")
-        Flowable<Book> streamList(@Body Flowable<List<Book>> books) {
-            return books.flatMap({ bookList ->
-                return Flowable.fromIterable(bookList)
+        Publisher<Book> streamList(@Body Publisher<List<Book>> books) {
+            return Flux.from(books).flatMap({ bookList ->
+                return Flux.fromIterable(bookList)
             })
         }
 
@@ -204,13 +210,13 @@ class XmlContentProcessorSpec extends Specification {
         }
 
         @Post("/author/books")
-        Flowable<Book> bookList(List<Book> books) {
-            return Flowable.fromIterable(books)
+        Publisher<Book> bookList(List<Book> books) {
+            return Flux.fromIterable(books)
         }
 
         @Post("/author/bookSet")
-        Flowable<Book> bookList(Set<Book> books) {
-            return Flowable.fromIterable(books)
+        Publisher<Book> bookList(Set<Book> books) {
+            return Flux.fromIterable(books)
         }
     }
 
