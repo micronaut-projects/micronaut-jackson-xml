@@ -17,11 +17,13 @@ package io.micronaut.xml.jackson
 
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.runtime.server.EmbeddedServer
-import io.reactivex.Single
+import org.reactivestreams.Publisher
+import reactor.core.publisher.Mono
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -40,25 +42,27 @@ class XmlRequestResponseSpec extends Specification {
 
     def 'verify client can parse xml content'() {
         when:
-        Single<XmlModel> model = xmlClient.getXmlContent()
+        Publisher<XmlModel> model = xmlClient.getXmlContent()
         then:
-        model.blockingGet().value == 'test'
+        Mono.from(model).block().value == 'test'
     }
 
     def 'verify client can send xml content'() {
         when:
         def requestModel = new XmlModel()
         requestModel.value = 'test'
-        Single<XmlModel> model = xmlClient.sendXmlContent(requestModel)
+        Publisher<XmlModel> model = xmlClient.sendXmlContent(requestModel)
+
         then:
-        model.blockingGet().value == 'test'
+        Mono.from(model).block().value == 'test'
     }
 
     def 'verify invalid xml content send'() {
         when:
-        xmlClient.sendRawXmlContent("<xmlModel><value></></xmlModel>").blockingGet()
+        Mono.from(xmlClient.sendRawXmlContent("<xmlModel><value></></xmlModel>")).block()
+
         then:
-        def exception = thrown(Exception)
+        Exception exception = thrown()
         exception.message.contains "Failed to convert argument [xmlModel] for value [null] due to: Unexpected character '>' (code 62)"
     }
 
@@ -67,13 +71,16 @@ class XmlRequestResponseSpec extends Specification {
     @Produces(MediaType.APPLICATION_XML)
     static interface XmlClient {
         @Get
-        Single<XmlModel> getXmlContent();
+        @SingleResult
+        Publisher<XmlModel> getXmlContent();
 
         @Post
-        Single<XmlModel> sendXmlContent(@Body XmlModel xmlModel);
+        @SingleResult
+        Publisher<XmlModel> sendXmlContent(@Body XmlModel xmlModel);
 
         @Post
-        Single<XmlModel> sendRawXmlContent(@Body String xml);
+        @SingleResult
+        Publisher<XmlModel> sendRawXmlContent(@Body String xml);
     }
 
     @Controller('/media/xml/')
@@ -82,13 +89,15 @@ class XmlRequestResponseSpec extends Specification {
     static class XmlController {
 
         @Get
-        Single<String> getXmlContent() {
-            return Single.just('<XmlModel><value>test</value></XmlModel>')
+        @SingleResult
+        Publisher<String> getXmlContent() {
+            return Mono.just('<XmlModel><value>test</value></XmlModel>')
         }
 
         @Post
-        Single<XmlModel> getXmlContent(@Body XmlModel xmlModel) {
-            return Single.just(xmlModel)
+        @SingleResult
+        Publisher<XmlModel> getXmlContent(@Body XmlModel xmlModel) {
+            return Mono.just(xmlModel)
         }
     }
 
