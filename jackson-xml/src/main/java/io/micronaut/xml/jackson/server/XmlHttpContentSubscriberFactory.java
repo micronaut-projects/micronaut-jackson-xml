@@ -23,7 +23,7 @@ import io.micronaut.http.server.netty.HttpContentSubscriberFactory;
 import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Builds the {@link org.reactivestreams.Subscriber} for XML requests.

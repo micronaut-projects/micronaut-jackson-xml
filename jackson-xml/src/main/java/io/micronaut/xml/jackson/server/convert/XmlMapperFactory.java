@@ -27,9 +27,9 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.jackson.JacksonConfiguration;
 import io.micronaut.xml.jackson.JacksonXmlConfiguration;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
