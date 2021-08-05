@@ -56,11 +56,6 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
     }
 
     @Override
-    public void subscribe(Subscriber<? super Object> downstreamSubscriber) {
-        super.subscribe(downstreamSubscriber);
-    }
-
-    @Override
     protected void onUpstreamMessage(ByteBufHolder message) {
         ByteBuf content = message.content();
 
@@ -70,6 +65,7 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
 
         try {
             content.readBytes(byteArrayStream, content.readableBytes());
+            upstreamDemand++;
             upstreamSubscription.request(1);
         } catch (IOException e) {
             onError(e);

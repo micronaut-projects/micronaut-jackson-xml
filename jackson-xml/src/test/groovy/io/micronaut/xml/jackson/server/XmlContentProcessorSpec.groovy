@@ -170,6 +170,19 @@ class XmlContentProcessorSpec extends Specification {
         author.books.size() == 2
     }
 
+    void "test sending a big book"() {
+        HttpClient client = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.getURL())
+
+        when:
+        List<Book> books = client.toBlocking().retrieve(
+                HttpRequest.POST("/xml/stream", '<book><title>' + "a"*5000 + '</title></book>')
+                        .contentType(MediaType.TEXT_XML_TYPE), Argument.listOf(Book.class))
+
+        then:
+        books.size() == 1
+        books[0].title.size() == 5000
+    }
+
     @Controller(value = "/xml/stream", consumes = MediaType.TEXT_XML)
     static class StreamController {
 
