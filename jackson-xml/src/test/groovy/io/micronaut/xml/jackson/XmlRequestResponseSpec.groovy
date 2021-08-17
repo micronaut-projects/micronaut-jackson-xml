@@ -21,6 +21,7 @@ import io.micronaut.core.async.annotation.SingleResult
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import org.reactivestreams.Publisher
 import reactor.core.publisher.Mono
@@ -62,8 +63,8 @@ class XmlRequestResponseSpec extends Specification {
         Mono.from(xmlClient.sendRawXmlContent("<xmlModel><value></></xmlModel>")).block()
 
         then:
-        Exception exception = thrown()
-        exception.message.contains "Failed to convert argument [xmlModel] for value [null] due to: Unexpected character '>' (code 62)"
+        HttpClientResponseException exception = thrown()
+        exception.response.getBody(Map).get()._embedded.errors[0].message.contains "Failed to convert argument [xmlModel] for value [null] due to: Unexpected character '>' (code 62)"
     }
 
     @Client('/media/xml/')
