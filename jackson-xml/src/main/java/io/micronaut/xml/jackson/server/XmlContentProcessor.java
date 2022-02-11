@@ -69,6 +69,8 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
             upstreamSubscription.request(1);
         } catch (IOException e) {
             onError(e);
+        } finally {
+            content.release();
         }
     }
 
