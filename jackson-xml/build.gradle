@@ -1,3 +1,7 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
 dependencies {
     annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     annotationProcessor "io.micronaut:micronaut-inject-java"
