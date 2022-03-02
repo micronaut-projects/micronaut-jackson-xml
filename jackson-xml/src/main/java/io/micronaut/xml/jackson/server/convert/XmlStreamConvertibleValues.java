@@ -119,8 +119,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
                             } else {
                                 return Optional.ofNullable(xmlMapper.readValue(streamReader, javaType));
                             }
-                        }
-                        if (depth == 0) {
+                        } else if (depth == 0) {
                             for (int i = 0; i < streamReader.getAttributeCount(); ++i) {
                                 String attr = streamReader.getAttributeLocalName(i);
                                 if (attr.equals(nameString)) {
@@ -128,8 +127,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
                                 }
                             }
                         }
-                    }
-                    if (token == END_ELEMENT) {
+                    } else if (token == END_ELEMENT) {
                         depth--;
                     }
                 }

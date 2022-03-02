@@ -21,7 +21,6 @@ import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.micronaut.xml.jackson.server.convert.ByteArrayXmlStreamReader;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
-import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,7 +90,9 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
                 ByteArrayXmlStreamReader byteArrayXmlStreamReader = new ByteArrayXmlStreamReader(bytes);
                 subscriber.onNext(byteArrayXmlStreamReader);
             } catch (XMLStreamException e) {
-                e.printStackTrace();
+                if (LOG.isErrorEnabled()) {
+                    LOG.error(e.getMessage(), e);
+                }
             }
         });
     }
