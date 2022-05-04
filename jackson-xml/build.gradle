@@ -3,14 +3,14 @@ plugins {
 }
 
 dependencies {
-    api platform("io.micronaut:micronaut-bom:$micronautVersion")
-    api "com.fasterxml.jackson.dataformat:jackson-dataformat-xml"
-    api "io.micronaut:micronaut-inject"
-    api "io.micronaut:micronaut-http"
+    api(platform(libs.boms.micronaut))
+    api(libs.jackson.dataformat.xml)
+    api(libs.micronaut.inject)
+    api(libs.micronaut.http)
 
-    testImplementation "io.projectreactor:reactor-core"
-    compileOnly "io.micronaut:micronaut-http-server-netty"
+    testImplementation(libs.reactor.core)
+    compileOnly(libs.micronaut.http.server.netty)
 
-    testImplementation "io.micronaut:micronaut-http-client"
-    testImplementation "io.micronaut:micronaut-http-server-netty"
+    testImplementation(libs.micronaut.http.client)
+    testImplementation(libs.micronaut.http.server.netty)
 }
