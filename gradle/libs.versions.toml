@@ -1,6 +1,6 @@
 [versions]
 # Micronaut
-micronaut = "3.5.4"
+micronaut = "4.0.0-SNAPSHOT"
 
 
 [libraries]
