@@ -36,13 +36,13 @@ import java.util.Optional;
 public class XmlStreamToObjectConverter implements TypeConverter<ByteArrayXmlStreamReader, Object> {
 
     private final XmlMapper xmlMapper;
-    private final ConversionService<?> conversionService;
+    private final ConversionService conversionService;
 
     /**
      * @param xmlMapper The XML Mapper
      * @param conversionService The conversion service
      */
-    public XmlStreamToObjectConverter(XmlMapper xmlMapper, ConversionService<?> conversionService) {
+    public XmlStreamToObjectConverter(XmlMapper xmlMapper, ConversionService conversionService) {
         this.xmlMapper = xmlMapper;
         this.conversionService = conversionService;
     }
