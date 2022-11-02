@@ -1,6 +1,6 @@
 [versions]
 # Micronaut
-micronaut = "3.5.4"
+micronaut = "3.7.3"
 
 
 [libraries]
