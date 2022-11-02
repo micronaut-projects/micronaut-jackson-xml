@@ -1,0 +1,4 @@
+plugins {
+    id "io.micronaut.build.internal.jackson-xml-base"
+    id "io.micronaut.build.internal.module"
+}

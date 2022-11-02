@@ -12,3 +12,14 @@ plugins {
 rootProject.name = "jackson-xml-parent"
 
 include 'jackson-xml'
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+
+micronautBuild {
+    importMicronautCatalog()
+}

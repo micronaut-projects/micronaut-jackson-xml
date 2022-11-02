@@ -47,7 +47,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
 
     private final ByteArrayXmlStreamReader stream;
     private final XmlMapper xmlMapper;
-    private final ConversionService<?> conversionService;
+    private final ConversionService conversionService;
     private final Supplier<JsonNode> objectNode;
 
     /**
@@ -57,7 +57,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
      */
     public XmlStreamConvertibleValues(ByteArrayXmlStreamReader stream,
                                       XmlMapper xmlMapper,
-                                      ConversionService<?> conversionService) {
+                                      ConversionService conversionService) {
         this.stream = stream;
         this.xmlMapper = xmlMapper;
         this.conversionService = conversionService;
