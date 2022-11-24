@@ -3,14 +3,13 @@ plugins {
 }
 
 dependencies {
-    api(platform(libs.boms.micronaut))
     api(libs.jackson.dataformat.xml)
-    api(libs.micronaut.inject)
-    api(libs.micronaut.http)
+    api(mn.micronaut.inject)
+    api(mn.micronaut.http)
 
     testImplementation(libs.reactor.core)
-    compileOnly(libs.micronaut.http.server.netty)
+    compileOnly(mn.micronaut.http.server.netty)
 
-    testImplementation(libs.micronaut.http.client)
-    testImplementation(libs.micronaut.http.server.netty)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server.netty)
 }

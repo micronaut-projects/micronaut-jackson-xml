@@ -1,17 +1,6 @@
 [versions]
-# Micronaut
-micronaut = "3.7.3"
-
 
 [libraries]
-# BOMs
-boms-micronaut = { module = "io.micronaut:micronaut-bom", version.ref = "micronaut" }
-
-# Micronaut
-micronaut-http = { module = "io.micronaut:micronaut-http" }
-micronaut-http-client = { module = "io.micronaut:micronaut-http-client" }
-micronaut-http-server-netty = { module = "io.micronaut:micronaut-http-server-netty" }
-micronaut-inject = { module = "io.micronaut:micronaut-inject" }
 
 jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml" }
 reactor-core = { module = "io.projectreactor:reactor-core" }
