@@ -1,0 +1,4 @@
+io.micronaut.xml.jackson
+io.micronaut.xml.jackson.codec
+io.micronaut.xml.jackson.server
+io.micronaut.xml.jackson.server.convert
