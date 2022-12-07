@@ -16,7 +16,7 @@
 package io.micronaut.xml.jackson.server;
 
 import io.micronaut.http.server.HttpServerConfiguration;
-import io.micronaut.http.server.netty.AbstractBufferingHttpContentProcessor;
+import io.micronaut.http.server.netty.AbstractHttpContentProcessor;
 import io.micronaut.http.server.netty.NettyHttpRequest;
 import io.micronaut.xml.jackson.server.convert.ByteArrayXmlStreamReader;
 import io.netty.buffer.ByteBuf;
@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * This class will handle subscribing to a Xml stream and binding once the events are complete in a non-blocking
@@ -36,7 +37,7 @@ import java.io.IOException;
  * @author James Kleeh
  * @since 1.0.0
  */
-public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<Object> {
+public class XmlContentProcessor extends AbstractHttpContentProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(XmlContentProcessor.class);
     private static final int DEFAULT_REQUEST_SIZE = 1024;
@@ -55,7 +56,7 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
     }
 
     @Override
-    protected void onUpstreamMessage(ByteBufHolder message) {
+    protected void onData(ByteBufHolder message, Collection<Object> out) throws Throwable {
         ByteBuf content = message.content();
 
         if (LOG.isDebugEnabled()) {
@@ -64,36 +65,15 @@ public class XmlContentProcessor extends AbstractBufferingHttpContentProcessor<O
 
         try {
             content.readBytes(byteArrayStream, content.readableBytes());
-            upstreamDemand++;
-            upstreamSubscription.request(1);
-        } catch (IOException e) {
-            onError(e);
         } finally {
             content.release();
         }
     }
 
     @Override
-    protected void doOnComplete() {
-        try {
-            sendXmlStreamToSubscriber();
-            super.doOnComplete();
-        } catch (Exception e) {
-            doOnError(e);
-        }
-    }
-
-    private void sendXmlStreamToSubscriber() {
-        currentDownstreamSubscriber().ifPresent(subscriber -> {
-            try {
-                byte[] bytes = byteArrayStream.toByteArray();
-                ByteArrayXmlStreamReader byteArrayXmlStreamReader = new ByteArrayXmlStreamReader(bytes);
-                subscriber.onNext(byteArrayXmlStreamReader);
-            } catch (XMLStreamException e) {
-                if (LOG.isErrorEnabled()) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
-        });
+    public void complete(Collection<Object> out) throws Throwable {
+        byte[] bytes = byteArrayStream.toByteArray();
+        ByteArrayXmlStreamReader byteArrayXmlStreamReader = new ByteArrayXmlStreamReader(bytes);
+        out.add(byteArrayXmlStreamReader);
     }
 }
