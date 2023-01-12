@@ -1,0 +1,14 @@
+plugins {
+    id 'java-library'
+    id "io.micronaut.build.internal.jackson-xml-tests"
+}
+
+dependencies {
+    annotationProcessor(platform(mn.micronaut.bom))
+    annotationProcessor(mn.micronaut.validation)
+
+    implementation projects.jacksonXml
+    implementation(mn.micronaut.validation)
+
+    testImplementation(platform(mn.micronaut.bom))
+}

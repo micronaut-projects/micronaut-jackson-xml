@@ -1,6 +1,11 @@
 [versions]
+kotlin = "1.7.21"
 
 [libraries]
 
 jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml" }
 reactor-core = { module = "io.projectreactor:reactor-core" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
