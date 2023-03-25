@@ -11,6 +11,7 @@ plugins {
 
 rootProject.name = "jackson-xml-parent"
 
+include 'jackson-bom'
 include 'jackson-xml'
 
 micronautBuild {
