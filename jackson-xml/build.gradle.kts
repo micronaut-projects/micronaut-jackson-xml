@@ -7,6 +7,7 @@ dependencies {
     api(mn.micronaut.inject)
     api(mn.micronaut.http)
     implementation(mn.micronaut.jackson.databind)
+    testImplementation(libs.jaxb.api)
     compileOnly(mn.micronaut.http.server.netty)
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)
