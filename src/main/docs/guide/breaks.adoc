@@ -1,0 +1,1 @@
+Micronaut Jackson XML BOM modules' coordinates have changed from `io.micronaut.xml:micronaut-jackson-bom` to  `io.micronaut.xml:micronaut-jackson-xml-bom`.
