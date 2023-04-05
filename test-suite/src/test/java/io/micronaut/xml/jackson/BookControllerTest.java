@@ -28,7 +28,7 @@ class BookControllerTest {
 
         assertNotNull(result);
         assertEquals("Huckleberry Finn", result.getName());
-        assertFalse(result.getIsbn().isBlank());
+        assertFalse(result.getIsbn().isEmpty());
     }
 
     @Test

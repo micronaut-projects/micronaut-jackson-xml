@@ -3,6 +3,7 @@ package io.micronaut.xml.jackson;
 import docs.BookSaved;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.PropertySource;
 import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.http.MediaType;
@@ -19,7 +20,6 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,11 +31,12 @@ class XmlBookControllerTest {
     @Test
     void testGetBook() {
         int mockPort = SocketUtils.findAvailableTcpPort();
-        ApplicationContext.run(EmbeddedServer.class, Map.of(
+
+        ApplicationContext.run(EmbeddedServer.class, PropertySource.mapOf(
             "spec.name", "XmlBookControllerTest",
             "micronaut.server.port", mockPort
         ));
-        ApplicationContext applicationContext = ApplicationContext.run(Map.of(
+        ApplicationContext applicationContext = ApplicationContext.run(PropertySource.mapOf(
             "spec.name", "XmlBookControllerTest",
             "mock.url", "http://localhost:" + mockPort
         ));
@@ -44,17 +45,17 @@ class XmlBookControllerTest {
 
         assertNotNull(bookSaved);
         assertEquals("Huckleberry Finn", bookSaved.getName());
-        assertFalse(bookSaved.getIsbn().isBlank());
+        assertFalse(bookSaved.getIsbn().isEmpty());
     }
 
     @Test
     void testPostBook() {
         int mockPort = SocketUtils.findAvailableTcpPort();
-        ApplicationContext.run(EmbeddedServer.class, Map.of(
+        ApplicationContext.run(EmbeddedServer.class, PropertySource.mapOf(
             "spec.name", "XmlBookControllerTest",
             "micronaut.server.port", mockPort
         ));
-        ApplicationContext applicationContext = ApplicationContext.run(Map.of(
+        ApplicationContext applicationContext = ApplicationContext.run(PropertySource.mapOf(
             "spec.name", "XmlBookControllerTest",
             "mock.url", "http://localhost:" + mockPort
         ));
@@ -67,7 +68,7 @@ class XmlBookControllerTest {
 
         assertNotNull(bookSaved);
         assertEquals("Tom Sayer", bookSaved.getName());
-        assertFalse(bookSaved.getIsbn().isBlank());
+        assertFalse(bookSaved.getIsbn().isEmpty());
     }
 
     @Requires(property = "spec.name", value = "XmlBookControllerTest")

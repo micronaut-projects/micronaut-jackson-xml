@@ -8,14 +8,10 @@ import javax.validation.constraints.NotBlank;
 
 @Introspected
 public class Book {
-
     @NonNull
     @NotBlank
     @JacksonXmlProperty(namespace = "Book", localName = "name")
     private String name;
-
-    public Book() {
-    }
 
     @NonNull
     public String getName() {
@@ -25,5 +21,4 @@ public class Book {
     public void setName(@NonNull String name) {
         this.name = name;
     }
-
 }

@@ -19,10 +19,6 @@ public class BookSaved {
     @JacksonXmlProperty(isAttribute = true, localName = "isbn")
     private String isbn;
 
-    public BookSaved() {
-
-    }
-
     @NonNull
     public String getName() {
         return name;
