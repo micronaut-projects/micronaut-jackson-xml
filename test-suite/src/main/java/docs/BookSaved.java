@@ -43,6 +43,6 @@ public class BookSaved {
 
     @Override
     public String toString() {
-        return "<Book isbn=" + isbn + "><name>" + name + "</name></Book>";
+        return "<Book isbn=\"" + isbn + "\"><name>" + name + "</name></Book>";
     }
 }

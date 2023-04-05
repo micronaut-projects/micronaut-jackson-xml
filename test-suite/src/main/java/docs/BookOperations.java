@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 @Client(value = "/books")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
-public interface XmlOperations {
+public interface BookOperations {
     @Post
     BookSaved save(@Valid @Body Book book);
 

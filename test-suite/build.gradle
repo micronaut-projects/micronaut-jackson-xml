@@ -12,15 +12,7 @@ dependencies {
     implementation("jakarta.annotation:jakarta.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
-
-
-//    annotationProcessor(platform(mn.micronaut.bom))
-//    annotationProcessor(mn.micronaut.validation)
-
-//    implementation projects.jacksonXml
-//    implementation(mn.micronaut.validation)
-
-//    testImplementation(platform(mn.micronaut.bom))
+    implementation "io.projectreactor:reactor-core"
 }
 
 micronaut {

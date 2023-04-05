@@ -21,12 +21,12 @@ class BookControllerTest {
     @Test
     void testSavebook() {
         Book book = new Book();
-        book.setName("Mark Twain");
+        book.setName("Huckleberry Finn");
 
         BookSaved result = client.save(book);
 
         assertNotNull(result);
-        assertEquals("Mark Twain", result.getName());
+        assertEquals("Huckleberry Finn", result.getName());
         assertFalse(result.getIsbn().isBlank());
     }
 }

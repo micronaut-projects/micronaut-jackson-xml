@@ -1,18 +1,13 @@
 package docs;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Produces;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Controller("/book")
-public class BookController implements XmlOperations {
+public class BookController implements BookOperations {
 
     public BookSaved save(@Valid @Body Book book) {
         BookSaved bookSaved = new BookSaved();

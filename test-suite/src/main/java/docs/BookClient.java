@@ -8,4 +8,4 @@ import io.micronaut.http.client.annotation.Client;
 @Client("/book")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
-public interface BookClient extends XmlOperations{}
+public interface BookClient extends BookOperations {}
