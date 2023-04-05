@@ -1,8 +1,8 @@
-package io.micronaut.xml.jackson;
+package io.micronaut.xml.jackson.docs;
 
-import docs.Book;
-import docs.BookClient;
-import docs.BookSaved;
+import io.micronaut.xml.jackson.docs.Book;
+import io.micronaut.xml.jackson.docs.BookClient;
+import io.micronaut.xml.jackson.docs.BookSaved;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;

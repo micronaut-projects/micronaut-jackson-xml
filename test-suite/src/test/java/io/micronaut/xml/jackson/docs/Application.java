@@ -1,4 +1,4 @@
-package docs;
+package io.micronaut.xml.jackson.docs;
 
 import io.micronaut.runtime.Micronaut;
 

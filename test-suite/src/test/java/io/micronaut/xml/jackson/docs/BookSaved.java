@@ -1,4 +1,4 @@
-package docs;
+package io.micronaut.xml.jackson.docs;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import io.micronaut.core.annotation.Introspected;

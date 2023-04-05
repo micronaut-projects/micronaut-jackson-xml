@@ -1,4 +1,4 @@
-package docs;
+package io.micronaut.xml.jackson.docs;
 import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;

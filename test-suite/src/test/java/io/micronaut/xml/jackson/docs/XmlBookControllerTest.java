@@ -1,6 +1,5 @@
-package io.micronaut.xml.jackson;
+package io.micronaut.xml.jackson.docs;
 
-import docs.BookSaved;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.PropertySource;
