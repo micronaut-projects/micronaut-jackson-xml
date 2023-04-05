@@ -19,7 +19,7 @@ public interface BookOperations {
     @SingleResult
     Publisher<BookSaved> save(@Valid @Body Book book);
 
-    @Get
+    @Get("/{isbn}")
     @SingleResult
     Publisher<BookSaved> find(@NotEmpty String isbn);
 }

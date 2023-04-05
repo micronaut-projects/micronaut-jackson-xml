@@ -6,6 +6,7 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Map;
 import java.util.UUID;
 
@@ -79,7 +81,7 @@ class XmlBookControllerTest {
 
         @Post
         @SingleResult
-        Publisher<BookSaved> putXmlContent(String xml);
+        Publisher<BookSaved> putXmlContent(@Body @NotEmpty String xml);
     }
 
     @Requires(property = "spec.name", value = "XmlBookControllerTest")
