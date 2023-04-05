@@ -14,11 +14,6 @@ public class Book {
     @JacksonXmlProperty(namespace = "Book", localName = "name")
     private String name;
 
-//    @NonNull
-//    @NotBlank
-//    @JacksonXmlProperty(namespace = "book", localName = "isbn")
-//    private String isbn;
-
     public Book() {
     }
 
@@ -30,14 +25,5 @@ public class Book {
     public void setName(@NonNull String name) {
         this.name = name;
     }
-
-//    @NonNull
-//    public String getIsbn() {
-//        return isbn;
-//    }
-//
-//    public void setIsbn(@NonNull String isbn) {
-//        this.isbn = isbn;
-//    }
 
 }
