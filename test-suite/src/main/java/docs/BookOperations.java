@@ -1,23 +1,25 @@
 package docs;
 
+import io.micronaut.core.async.annotation.SingleResult;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
-import io.micronaut.http.client.annotation.Client;
+import org.reactivestreams.Publisher;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
-@Client(value = "/books")
 @Consumes(MediaType.APPLICATION_XML)
 @Produces(MediaType.APPLICATION_XML)
 public interface BookOperations {
     @Post
-    BookSaved save(@Valid @Body Book book);
+    @SingleResult
+    Publisher<BookSaved> save(@Valid @Body Book book);
 
     @Get
-    BookSaved find(@NotEmpty String isbn);
+    @SingleResult
+    Publisher<BookSaved> find(@NotEmpty String isbn);
 }

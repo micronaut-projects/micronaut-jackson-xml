@@ -7,6 +7,7 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -23,11 +24,22 @@ class BookControllerTest {
         Book book = new Book();
         book.setName("Huckleberry Finn");
 
-        BookSaved result = client.save(book);
+        BookSaved result = Mono.from(client.save(book)).block();
 
         assertNotNull(result);
         assertEquals("Huckleberry Finn", result.getName());
         assertFalse(result.getIsbn().isBlank());
+    }
+
+    @Test
+    void testGetbook() {
+        String name = "foo";
+
+        BookSaved result = Mono.from(client.find(name)).block();
+
+        assertNotNull(result);
+        assertEquals("Tom Sayer", result.getName());
+        assertEquals("foo", result.getIsbn());
     }
 }
 
