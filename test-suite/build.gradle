@@ -1,14 +1,33 @@
 plugins {
-    id 'java-library'
-    id "io.micronaut.build.internal.jackson-xml-tests"
+    id("io.micronaut.application") version "3.7.7"
+    id "io.micronaut.build.internal.jackson-xml-examples"
 }
 
 dependencies {
-    annotationProcessor(platform(mn.micronaut.bom))
-    annotationProcessor(mn.micronaut.validation)
 
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
     implementation projects.jacksonXml
-    implementation(mn.micronaut.validation)
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
 
-    testImplementation(platform(mn.micronaut.bom))
+
+//    annotationProcessor(platform(mn.micronaut.bom))
+//    annotationProcessor(mn.micronaut.validation)
+
+//    implementation projects.jacksonXml
+//    implementation(mn.micronaut.validation)
+
+//    testImplementation(platform(mn.micronaut.bom))
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("docs.*")
+    }
 }
