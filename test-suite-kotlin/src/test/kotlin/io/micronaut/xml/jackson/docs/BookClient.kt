@@ -9,8 +9,6 @@ import io.micronaut.http.client.annotation.Client
 import javax.validation.Valid
 
 @Client("/")
-@Consumes(MediaType.APPLICATION_XML)
-@Produces(MediaType.APPLICATION_XML)
 interface BookClient {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
