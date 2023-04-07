@@ -6,12 +6,11 @@ import io.micronaut.http.annotation.Consumes
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.annotation.Client
-import javax.validation.Valid
 
 @Client("/")
 interface BookClient {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    fun save(@Valid @Body book: Book): BookSaved
+    fun save(@Body book: Book): BookSaved
 }
