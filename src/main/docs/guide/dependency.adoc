@@ -1,0 +1,5 @@
+To use Micronaut Jackson XML add the following dependency:
+
+dependency:micronaut-jackson-xml[groupId="io.micronaut.xml"]
+
+See the https://github.com/FasterXML/jackson-dataformat-xml[Jackson XML] documentation for more information.

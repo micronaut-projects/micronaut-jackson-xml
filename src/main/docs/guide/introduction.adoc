@@ -2,8 +2,3 @@ When this library is added to a Micronaut application, it creates the beans nece
 
 Because XML has no array boundaries, the entire request body must be buffered into memory before deserialization can occur. The standard request body size limits apply here as well.
 
-Simply add the dependency to your Micronaut 1.3 or above project.
-
-dependency:micronaut-jackson-xml[groupId="io.micronaut.xml"]
-
-See the https://github.com/FasterXML/jackson-dataformat-xml[Jackson XML] documentation for more information.
