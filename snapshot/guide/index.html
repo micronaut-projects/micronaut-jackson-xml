@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <title>Micronaut Jackson XML</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
     <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
@@ -46,13 +45,13 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#dependency"><strong>2</strong><span>Dependency</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#example"><strong>3</strong><span>Example</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#spanshots"><strong>4</strong><span>Snapshots and Releases</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#release"><strong>5</strong><span>Releases</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -85,13 +84,13 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>2</strong><span>Release History</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-dependency"><a href="#dependency"><strong>2</strong><span>Dependency</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>3</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-example"><a href="#example"><strong>3</strong><span>Example</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-spanshots"><a href="#spanshots"><strong>4</strong><span>Snapshots and Releases</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-release"><a href="#release"><strong>5</strong><span>Releases</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -107,7 +106,7 @@
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -119,8 +118,18 @@
 <div class="paragraph">
 <p>Because XML has no array boundaries, the entire request body must be buffered into memory before deserialization can occur. The standard request body size limits apply here as well.</p>
 </div>
+
+<h1 id="dependency"><a class="anchor" href="#dependency"></a>2 Dependency</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/dependency.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
 <div class="paragraph">
-<p>Simply add the dependency to your Micronaut 1.3 or above project.</p>
+<p>To use Micronaut Jackson XML add the following dependency:</p>
 </div>
 <div class="paragraph">
 <p>        <div class="listingblock multi-language-sample">
@@ -142,10 +151,322 @@
 <p>See the <a href="https://github.com/FasterXML/jackson-dataformat-xml">Jackson XML</a> documentation for more information.</p>
 </div>
 
-<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>2 Release History</h1>
+<h1 id="example"><a class="anchor" href="#example"></a>3 Example</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/example.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>To send an XML document such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;book&gt;
+    &lt;name&gt;Huckleberry Finn&lt;/name&gt;
+&lt;/book&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You could define a POJO such as the following:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
+
+@Introspected
+@JacksonXmlRootElement(localName = "book")
+public class Book {
+    @NonNull
+    private final String name;
+
+    public Book(String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.core.annotation.NonNull
+
+@Introspected
+@JacksonXmlRootElement(localName = "book")
+class Book {
+    @NonNull
+    String name
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import io.micronaut.core.annotation.Introspected
+
+@Introspected
+@JacksonXmlRootElement(localName = "book")
+data class Book(val name: String)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To return an XML document such as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;book isbn="f594e59e-6c2d-41b3-ba77-a3aabafceae4"&gt;
+    &lt;name&gt;Huckleberry Finn&lt;/name&gt;
+&lt;/book&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You could define a POJO such as the following:</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
+
+@JacksonXmlRootElement(localName = "book")
+@Introspected
+public class BookSaved {
+
+    @NonNull
+    private final String name;
+
+    @NonNull
+    @JacksonXmlProperty(isAttribute = true)
+    private final String isbn;
+
+    public BookSaved(String name, String isbn) {
+        this.name = name;
+        this.isbn = isbn;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    @NonNull
+    public String getIsbn() {
+        return isbn;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.core.annotation.NonNull
+
+@JacksonXmlRootElement(localName = "book")
+@Introspected
+class BookSaved {
+    String name
+
+    @NonNull
+    @JacksonXmlProperty(isAttribute = true)
+    String isbn
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import io.micronaut.core.annotation.Introspected
+
+@JacksonXmlRootElement(localName = "book")
+@Introspected
+data class BookSaved(val name: String, @field:JacksonXmlProperty(isAttribute = true) val isbn: String)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To receive and send XML from a Micronaut Controller, you can specify the <code>Accept</code> HTTP header and the response <code>Content-Type</code> with the
+<a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Produces.html"><code>@Produces</code></a> and <a href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Consumes.html"><code>@Consumes</code></a> annotations.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
+
+import javax.validation.Valid;
+import java.util.UUID;
+
+@Controller
+public class BookController {
+
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    public BookSaved save(@Valid @Body Book book) {
+        return new BookSaved(book.getName(), UUID.randomUUID().toString());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
+
+import javax.validation.Valid;
+
+@Controller
+class BookController {
+
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    BookSaved save(@Valid @Body Book book) {
+        new BookSaved(name: book.getName(), isbn: UUID.randomUUID().toString())
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
+import java.util.*
+
+import javax.validation.Valid
+
+@Controller
+class BookController {
+
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    fun save(@Valid @Body book: Book) = BookSaved(book.name, UUID.randomUUID().toString())
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Moreover, you can send and receive XML with the Micronaut HTTP Client.</p>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Produces;
+import io.micronaut.http.client.annotation.Client;
+
+import javax.validation.Valid;
+
+@Client("/")
+@Consumes(MediaType.APPLICATION_XML)
+@Produces(MediaType.APPLICATION_XML)
+public interface BookClient {
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    BookSaved save(@Valid @Body Book book);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
+import io.micronaut.http.client.annotation.Client
+
+import javax.validation.Valid
+
+@Client("/")
+@Consumes(MediaType.APPLICATION_XML)
+@Produces(MediaType.APPLICATION_XML)
+interface BookClient {
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    BookSaved save(@Valid @Body Book book)
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
+import io.micronaut.http.client.annotation.Client
+import javax.validation.Valid
+
+@Client("/")
+@Consumes(MediaType.APPLICATION_XML)
+@Produces(MediaType.APPLICATION_XML)
+interface BookClient {
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    fun save(@Valid @Body book: Book): BookSaved
+}</code></pre>
+</div>
+</div>
+
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -158,10 +479,10 @@
 <p><a href="https://github.com/micronaut-projects/micronaut-jackson-xml/releases">https://github.com/micronaut-projects/micronaut-jackson-xml/releases</a></p>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>3 Repository</h1>
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -172,54 +493,6 @@
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/micronaut-projects/micronaut-jackson-xml">https://github.com/micronaut-projects/micronaut-jackson-xml</a></p>
-</div>
-
-<h1 id="spanshots"><a class="anchor" href="#spanshots"></a>4 Snapshots and Releases</h1>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/spanshots.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Snaphots are automatically published to <a href="https://oss.jfrog.org/artifactory/oss-snapshot-local/">JFrog OSS</a> using <a href="https://github.com/micronaut-projects/micronaut-jackson-xml/actions">Github Actions</a>.</p>
-</div>
-<div class="paragraph">
-<p>See the documentation in the <a href="https://docs.micronaut.io/latest/guide/index.html#usingsnapshots">Micronaut Docs</a> for how to configure your build to use snapshots.</p>
-</div>
-
-<h1 id="release"><a class="anchor" href="#release"></a>5 Releases</h1>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/release.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>Releases are published to JCenter and Maven Central via <a href="https://github.com/micronaut-projects/micronaut-jackson-xml/actions">Github Actions</a>.</p>
-</div>
-<div class="paragraph">
-<p>A release is performed with the following steps:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/gradle.properties">Edit the version</a> specified by <code>projectVersion</code> in <code>gradle.properties</code> to a semantic, unreleased version. Example <code>1.0.0</code></p>
-</li>
-<li>
-<p><a href="https://github.com/micronaut-projects/micronaut-jackson-xml/releases/new">Create a new release</a>. The Git Tag should start with <code>v</code>. For example <code>v1.0.0</code>.</p>
-</li>
-<li>
-<p><a href="https://github.com/micronaut-projects/micronaut-jackson-xml/actions?query=workflow%3ARelease">Monitor the Workflow</a> to check it passed successfully.</p>
-</li>
-<li>
-<p>Celebrate!</p>
-</li>
-</ul>
 </div>
 
     </div>
