@@ -1,17 +1,17 @@
 package io.micronaut.xml.jackson.docs;
 
-import io.micronaut.xml.jackson.docs.Book;
-import io.micronaut.xml.jackson.docs.BookClient;
-import io.micronaut.xml.jackson.docs.BookSaved;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.MediaType;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @MicronautTest
 class BookControllerTest {
@@ -19,27 +19,26 @@ class BookControllerTest {
     @Client("/books")
     BookClient client;
 
+    @Inject
+    @Client("/")
+    HttpClient httpClient;
+
     @Test
     void testSavebook() {
-        Book book = new Book();
-        book.setName("Huckleberry Finn");
+        Book book = new Book("Huckleberry Finn");
 
-        BookSaved result = Mono.from(client.save(book)).block();
+        BookSaved result = client.save(book);
 
         assertNotNull(result);
         assertEquals("Huckleberry Finn", result.getName());
-        assertFalse(result.getIsbn().isEmpty());
-    }
+        assertTrue(StringUtils.isNotEmpty(result.getIsbn()));
 
-    @Test
-    void testGetbook() {
-        String name = "foo";
+        String xml = httpClient.toBlocking().retrieve(HttpRequest.POST("/book", "<book><name>Huckleberry Finn</name></book>")
+                .accept(MediaType.APPLICATION_XML)
+                .contentType(MediaType.APPLICATION_XML));
 
-        BookSaved result = Mono.from(client.find(name)).block();
-
-        assertNotNull(result);
-        assertEquals("Tom Sayer", result.getName());
-        assertEquals("foo", result.getIsbn());
+        assertTrue(xml.startsWith("<book isbn=\""));
+        assertTrue(xml.endsWith("\"><name>Huckleberry Finn</name></book>"));
     }
 }
 

@@ -15,8 +15,8 @@ rootProject.name = "jackson-xml-parent"
 include 'jackson-bom'
 include 'jackson-xml'
 include "test-suite"
-//include "test-suite-groovy"
-//include "test-suite-kotlin"
+include "test-suite-groovy"
+include "test-suite-kotlin"
 
 micronautBuild {
     importMicronautCatalog()

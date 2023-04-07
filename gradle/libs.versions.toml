@@ -5,6 +5,9 @@ kotlin = "1.7.21"
 
 jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml" }
 reactor-core = { module = "io.projectreactor:reactor-core" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+logback-classic = { module = "ch.qos.logback:logback-classic" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
