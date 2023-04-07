@@ -3,3 +3,4 @@ dependency: Dependency
 example: Example
 releaseHistory: Release History
 repository: Repository
+breaks: Breaking Changes
