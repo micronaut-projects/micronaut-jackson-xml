@@ -1,6 +1,6 @@
 introduction: Introduction
+dependency: Dependency
+example: Example
 releaseHistory: Release History
 repository: Repository
-spanshots: Snapshots and Releases
-release: Releases
 breaks: Breaking Changes
