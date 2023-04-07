@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <title>Micronaut Jackson XML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
     <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
@@ -106,7 +107,7 @@
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -122,7 +123,7 @@
 <h1 id="dependency"><a class="anchor" href="#dependency"></a>2 Dependency</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/dependency.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/dependency.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -154,7 +155,7 @@
 <h1 id="example"><a class="anchor" href="#example"></a>3 Example</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/example.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/example.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -179,22 +180,10 @@
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 
 @Introspected
 @JacksonXmlRootElement(localName = "book")
-public class Book {
-    @NonNull
-    private final String name;
-
-    public Book(String name) {
-        this.name = name;
-    }
-
-    @NonNull
-    public String getName() {
-        return name;
-    }
+public record Book(String name) {
 }</code></pre>
 </div>
 </div>
@@ -323,8 +312,6 @@ import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
-
-import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
@@ -333,8 +320,8 @@ public class BookController {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    public BookSaved save(@Valid @Body Book book) {
-        return new BookSaved(book.getName(), UUID.randomUUID().toString());
+    public BookSaved save(@Body Book book) {
+        return new BookSaved(book.name(), UUID.randomUUID().toString());
     }
 }</code></pre>
 </div>
@@ -350,15 +337,13 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
 
-import javax.validation.Valid;
-
 @Controller
 class BookController {
 
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    BookSaved save(@Valid @Body Book book) {
+    BookSaved save(@Body Book book) {
         new BookSaved(name: book.getName(), isbn: UUID.randomUUID().toString())
     }
 }</code></pre>
@@ -376,15 +361,13 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
 import java.util.*
 
-import javax.validation.Valid
-
 @Controller
 class BookController {
 
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    fun save(@Valid @Body book: Book) = BookSaved(book.name, UUID.randomUUID().toString())
+    fun save(@Body book: Book) = BookSaved(book.name, UUID.randomUUID().toString())
 }</code></pre>
 </div>
 </div>
@@ -402,16 +385,12 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.client.annotation.Client;
 
-import javax.validation.Valid;
-
 @Client("/")
-@Consumes(MediaType.APPLICATION_XML)
-@Produces(MediaType.APPLICATION_XML)
 public interface BookClient {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    BookSaved save(@Valid @Body Book book);
+    BookSaved save(@Body Book book);
 }</code></pre>
 </div>
 </div>
@@ -426,16 +405,12 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.annotation.Client
 
-import javax.validation.Valid
-
 @Client("/")
-@Consumes(MediaType.APPLICATION_XML)
-@Produces(MediaType.APPLICATION_XML)
 interface BookClient {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    BookSaved save(@Valid @Body Book book)
+    BookSaved save(@Body Book book)
 }</code></pre>
 </div>
 </div>
@@ -449,7 +424,6 @@ import io.micronaut.http.annotation.Consumes
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.client.annotation.Client
-import javax.validation.Valid
 
 @Client("/")
 @Consumes(MediaType.APPLICATION_XML)
@@ -458,7 +432,7 @@ interface BookClient {
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
-    fun save(@Valid @Body book: Book): BookSaved
+    fun save(@Body book: Book): BookSaved
 }</code></pre>
 </div>
 </div>
@@ -466,7 +440,7 @@ interface BookClient {
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -482,7 +456,7 @@ interface BookClient {
 <h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/3.2.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/master/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
