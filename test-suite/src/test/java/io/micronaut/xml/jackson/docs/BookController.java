@@ -15,6 +15,6 @@ public class BookController {
     @Produces(MediaType.APPLICATION_XML)
     @Post("/book")
     public BookSaved save(@Body Book book) {
-        return new BookSaved(book.getName(), UUID.randomUUID().toString());
+        return new BookSaved(book.name(), UUID.randomUUID().toString());
     }
 }
