@@ -1,0 +1,35 @@
+To send an XML document such as:
+
+[source,xml]
+----
+<book>
+    <name>Huckleberry Finn</name>
+</book>
+----
+
+You could define a POJO such as the following:
+
+snippet::io.micronaut.xml.jackson.docs.Book[]
+
+To return an XML document such as:
+
+[source,xml]
+----
+<book isbn="f594e59e-6c2d-41b3-ba77-a3aabafceae4">
+    <name>Huckleberry Finn</name>
+</book>
+----
+
+
+You could define a POJO such as the following:
+
+snippet::io.micronaut.xml.jackson.docs.BookSaved[]
+
+To receive and send XML from a Micronaut Controller, you can specify the `Accept` HTTP header and the response `Content-Type` with the
+https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Produces.html[`@Produces`] and https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Consumes.html[`@Consumes`] annotations.
+
+snippet::io.micronaut.xml.jackson.docs.BookController[]
+
+Moreover, you can send and receive XML with the Micronaut HTTP Client.
+
+snippet::io.micronaut.xml.jackson.docs.BookClient[]
