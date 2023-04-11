@@ -1,0 +1,22 @@
+[
+  {
+    "name": "com.fasterxml.jackson.databind.ext.DOMSerializer",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "com.fasterxml.jackson.databind.ext.DOMDeserializer$NodeDeserializer",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "com.fasterxml.jackson.databind.ext.DOMDeserializer$DocumentDeserializer",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "com.fasterxml.jackson.databind.ext.CoreXMLDeserializers",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "com.fasterxml.jackson.databind.ext.DOMSerializer",
+    "allDeclaredConstructors": true
+  }
+]
