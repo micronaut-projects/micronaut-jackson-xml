@@ -8,12 +8,13 @@ spock = "2.3-groovy-4.0"
 jaxb-api = "2.3.1"
 kotlin = "1.8.21"
 
+micronaut-logging = "1.0.0-M2"
 [libraries]
+micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 
 jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml" }
 jaxb-api = { module = "javax.xml.bind:jaxb-api", version.ref = "jaxb-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
-logback-classic = { module = "ch.qos.logback:logback-classic" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 
 [plugins]

@@ -14,7 +14,7 @@ dependencies {
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
-    testRuntimeOnly(libs.logback.classic)
+    testRuntimeOnly(mnLogging.logback.classic)
 }
 
 tasks.withType<Test> {
