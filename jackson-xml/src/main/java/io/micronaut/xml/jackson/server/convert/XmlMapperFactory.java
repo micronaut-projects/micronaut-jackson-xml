@@ -16,22 +16,33 @@
 package io.micronaut.xml.jackson.server.convert;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
+import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Type;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.core.reflect.GenericTypeUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.jackson.JacksonConfiguration;
+import io.micronaut.jackson.serialize.MicronautDeserializers;
 import io.micronaut.xml.jackson.JacksonXmlConfiguration;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.TimeZone;
 
 /**
@@ -47,6 +58,8 @@ import java.util.TimeZone;
 @Factory
 @BootstrapContextCompatible
 public class XmlMapperFactory {
+    @Inject
+    protected ConversionService conversionService;
 
     @Inject
     // has to be fully qualified due to JDK Module type
@@ -63,6 +76,9 @@ public class XmlMapperFactory {
 
     @Inject
     protected BeanDeserializerModifier[] beanDeserializerModifiers = new BeanDeserializerModifier[0];
+
+    @Inject
+    protected KeyDeserializer[] keyDeserializers = new KeyDeserializer[0];
 
     /**
      * Builds the core Jackson {@link ObjectMapper} from the optional configuration and {@link com.fasterxml.jackson.core.JsonFactory}.
@@ -89,6 +105,62 @@ public class XmlMapperFactory {
             objectMapper.findAndRegisterModules();
         }
         objectMapper.registerModules(jacksonModules);
+        SimpleModule module = new SimpleModule("micronaut");
+        module.setDeserializers(new MicronautDeserializers(conversionService));
+
+        for (JsonSerializer serializer : serializers) {
+            Class<? extends JsonSerializer> type = serializer.getClass();
+            Type annotation = type.getAnnotation(Type.class);
+            if (annotation != null) {
+                Class<?>[] value = annotation.value();
+                for (Class<?> aClass : value) {
+                    module.addSerializer(aClass, serializer);
+                }
+            } else {
+                Optional<Class<?>> targetType = GenericTypeUtils.resolveSuperGenericTypeArgument(type);
+                if (targetType.isPresent()) {
+                    module.addSerializer(targetType.get(), serializer);
+                } else {
+                    module.addSerializer(serializer);
+                }
+            }
+        }
+
+        for (JsonDeserializer deserializer : deserializers) {
+            Class<? extends JsonDeserializer> type = deserializer.getClass();
+            Type annotation = type.getAnnotation(Type.class);
+            if (annotation != null) {
+                Class<?>[] value = annotation.value();
+                for (Class<?> aClass : value) {
+                    module.addDeserializer(aClass, deserializer);
+                }
+            } else {
+                Optional<Class<?>> targetType = GenericTypeUtils.resolveSuperGenericTypeArgument(type);
+                targetType.ifPresent(aClass -> module.addDeserializer(aClass, deserializer));
+            }
+        }
+
+        if (hasConfiguration && jacksonConfiguration.isTrimStrings()) {
+            module.addDeserializer(String.class, new StringDeserializer() {
+                @Override
+                public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                    String value = super.deserialize(p, ctxt);
+                    return StringUtils.trimToNull(value);
+                }
+            });
+        }
+
+        for (KeyDeserializer keyDeserializer : keyDeserializers) {
+            Class<? extends KeyDeserializer> type = keyDeserializer.getClass();
+            Type annotation = type.getAnnotation(Type.class);
+            if (annotation != null) {
+                Class<?>[] value = annotation.value();
+                for (Class<?> clazz : value) {
+                    module.addKeyDeserializer(clazz, keyDeserializer);
+                }
+            }
+        }
+        objectMapper.registerModule(module);
 
         for (BeanSerializerModifier beanSerializerModifier : beanSerializerModifiers) {
             objectMapper.setSerializerFactory(
