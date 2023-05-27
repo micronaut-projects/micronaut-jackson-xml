@@ -107,11 +107,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>protected com.fasterxml.jackson.databind.ser.BeanSerializerModifier[]</code></div>
 <div class="col-second odd-row-color"><code><a href="#beanSerializerModifiers" class="member-name-link">beanSerializerModifiers</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected com.fasterxml.jackson.databind.JsonDeserializer[]</code></div>
-<div class="col-second even-row-color"><code><a href="#deserializers" class="member-name-link">deserializers</a></code></div>
+<div class="col-first even-row-color"><code>protected io.micronaut.core.convert.ConversionService</code></div>
+<div class="col-second even-row-color"><code><a href="#conversionService" class="member-name-link">conversionService</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected com.fasterxml.jackson.databind.Module[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#jacksonModules" class="member-name-link">jacksonModules</a></code></div>
+<div class="col-first odd-row-color"><code>protected com.fasterxml.jackson.databind.JsonDeserializer[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#deserializers" class="member-name-link">deserializers</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected com.fasterxml.jackson.databind.Module[]</code></div>
+<div class="col-second even-row-color"><code><a href="#jacksonModules" class="member-name-link">jacksonModules</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected com.fasterxml.jackson.databind.KeyDeserializer[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#keyDeserializers" class="member-name-link">keyDeserializers</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected com.fasterxml.jackson.databind.JsonSerializer[]</code></div>
 <div class="col-second even-row-color"><code><a href="#serializers" class="member-name-link">serializers</a></code></div>
@@ -167,6 +173,13 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="conversionService">
+<h3>conversionService</h3>
+<div class="member-signature"><span class="annotations">@Inject
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">io.micronaut.core.convert.ConversionService</span>&nbsp;<span class="element-name">conversionService</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="jacksonModules">
 <h3>jacksonModules</h3>
 <div class="member-signature"><span class="annotations">@Inject
@@ -199,6 +212,13 @@ loadScripts(document, 'script');</script>
 <h3>beanDeserializerModifiers</h3>
 <div class="member-signature"><span class="annotations">@Inject
 </span><span class="modifiers">protected</span>&nbsp;<span class="return-type">com.fasterxml.jackson.databind.deser.BeanDeserializerModifier[]</span>&nbsp;<span class="element-name">beanDeserializerModifiers</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="keyDeserializers">
+<h3>keyDeserializers</h3>
+<div class="member-signature"><span class="annotations">@Inject
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">com.fasterxml.jackson.databind.KeyDeserializer[]</span>&nbsp;<span class="element-name">keyDeserializers</span></div>
 </section>
 </li>
 </ul>
