@@ -128,7 +128,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.fasterxml.jackson.databind.ObjectMapper,io.micronaut.runtime.ApplicationConfiguration,io.micronaut.http.codec.CodecConfiguration)" class="member-name-link">XmlMediaTypeCodec</a><wbr>(com.fasterxml.jackson.databind.ObjectMapper&nbsp;xmlMapper,
  io.micronaut.runtime.ApplicationConfiguration&nbsp;applicationConfiguration,
- io.micronaut.http.codec.CodecConfiguration&nbsp;codecConfiguration)</code></div>
+ @Nullable io.micronaut.http.codec.CodecConfiguration&nbsp;codecConfiguration)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -202,7 +202,7 @@ loadScripts(document, 'script');</script>
  com.fasterxml.jackson.databind.ObjectMapper&nbsp;xmlMapper,
  io.micronaut.runtime.ApplicationConfiguration&nbsp;applicationConfiguration,
  @Named("xml") @Nullable
- io.micronaut.http.codec.CodecConfiguration&nbsp;codecConfiguration)</span></div>
+ @Nullable io.micronaut.http.codec.CodecConfiguration&nbsp;codecConfiguration)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>xmlMapper</code> - Object mapper for xml. If null, retrieved from beanContext</dd>
