@@ -1,9 +1,9 @@
 [versions]
-micronaut = "4.0.0-M6"
+micronaut = "4.0.0-M7"
 micronaut-docs = "2.0.0"
 micronaut-test = "4.0.0-M6"
 
-groovy = "4.0.11"
+groovy = "4.0.12"
 spock = "2.3-groovy-4.0"
 jaxb-api = "2.3.1"
 kotlin = "1.8.22"
