@@ -3,6 +3,7 @@ plugins {
 }
 micronautBuild {
     binaryCompatibility {
-        enabled.set(false)
+        enabled.set(true)
+        baselineVersion.set("4.0.0-M8")
     }
 }
