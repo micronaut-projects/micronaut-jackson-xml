@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.micronaut.xml.jackson"},{"l":"io.micronaut.xml.jackson.codec"},{"l":"io.micronaut.xml.jackson.server"},{"l":"io.micronaut.xml.jackson.server.convert"}];updateSearchResults();
