@@ -1,10 +1,9 @@
 package io.micronaut.xml.jackson.graal;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 @Introspected
 @JacksonXmlRootElement(localName = "book")

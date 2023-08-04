@@ -1,13 +1,13 @@
 package io.micronaut.xml.jackson.graal;
 
-import java.util.UUID;
-
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
+
+import java.util.UUID;
 
 @Controller
 public class BookController {
