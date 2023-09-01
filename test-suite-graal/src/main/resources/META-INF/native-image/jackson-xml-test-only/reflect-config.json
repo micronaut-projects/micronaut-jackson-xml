@@ -1,0 +1,11 @@
+[
+  {
+    "name": "io.micronaut.xml.jackson.graal.BookSaved",
+    "queryAllDeclaredMethods": true,
+    "condition": {
+      "typeReachable": "com.fasterxml.jackson.databind.ObjectMapper"
+    },
+    "allDeclaredFields": true,
+    "queryAllDeclaredConstructors": true
+  }
+]
