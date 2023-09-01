@@ -1,0 +1,4 @@
+jackson:
+  locale: en_US
+  date-format: yyyy-MM-dd'T'HH:mm:ss.SSSX
+  time-zone: UTC
