@@ -4,8 +4,9 @@ plugins {
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
-    implementation "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin:0.9.25"
+    implementation libs.gradle.micronaut
 }

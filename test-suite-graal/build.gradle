@@ -1,47 +1,19 @@
 plugins {
-    id("java-library")
-    id("org.graalvm.buildtools.native")
-    id("io.micronaut.build.internal.jackson-xml-examples")
+    id("io.micronaut.application")
 }
 
 dependencies {
-    annotationProcessor(mn.micronaut.inject.java)
     implementation(projects.micronautJacksonXml)
-    testAnnotationProcessor(mn.micronaut.inject.java)
-    testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testImplementation(mn.micronaut.http.client)
-    testRuntimeOnly(mn.micronaut.http.server.netty)
-    testRuntimeOnly(mnLogging.logback.classic)
+    implementation(mnLogging.logback.classic)
+
     runtimeOnly(mn.snakeyaml)
-}
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-}
 
-tasks.named("check") { task ->
-    boolean graal = ["jvmci.Compiler", "java.vendor.version", "java.vendor"].any {
-        System.getProperty(it)?.toLowerCase(Locale.ENGLISH)?.contains("graal")
-    }
-    if (graal) {
-        task.dependsOn("nativeTest")
-    }
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mnTest.micronaut.test.junit5)
 }
 
-List<String> openGraalModules = [
-        "org.graalvm.nativeimage.builder/com.oracle.svm.core.jdk",
-        "org.graalvm.nativeimage.builder/com.oracle.svm.core.configure",
-        "org.graalvm.sdk/org.graalvm.nativeimage.impl"
-]
-
-graalvmNative {
-    toolchainDetection = false
-    binaries {
-        all {
-            openGraalModules.each { module ->
-                jvmArgs.add("--add-exports=" + module + "=ALL-UNNAMED")
-            }
-            resources.autodetect()
-        }
-    }
+micronaut {
+    importMicronautPlatform = false
+    runtime("netty")
+    testRuntime("junit5")
 }
