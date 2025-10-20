@@ -8,7 +8,7 @@ dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(platform(mn.micronaut.core.bom))
     testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
