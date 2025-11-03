@@ -1,6 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.jackson-xml-examples")
     id("java-library")
+    id("io.micronaut.build.internal.java-base")
 }
 
 dependencies {

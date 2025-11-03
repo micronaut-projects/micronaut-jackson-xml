@@ -2,6 +2,7 @@ plugins {
     id("io.micronaut.build.internal.jackson-xml-examples")
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.kapt)
+    id("io.micronaut.build.internal.kotlin-base")
 }
 
 dependencies {
