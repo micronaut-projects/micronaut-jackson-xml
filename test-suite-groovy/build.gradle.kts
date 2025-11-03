@@ -8,11 +8,12 @@ dependencies {
     testImplementation(platform(mn.micronaut.core.bom))
     testCompileOnly(mn.micronaut.inject.groovy)
     testImplementation(mnTest.micronaut.test.spock)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
     testRuntimeOnly(mnLogging.logback.classic)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {

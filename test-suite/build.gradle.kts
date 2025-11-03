@@ -1,6 +1,7 @@
 plugins {
     id("io.micronaut.build.internal.jackson-xml-examples")
     id("java-library")
+    id("io.micronaut.build.internal.java-base")
 }
 
 dependencies {
@@ -8,7 +9,7 @@ dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(platform(mn.micronaut.core.bom))
     testImplementation(mnTest.micronaut.test.junit5)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnTest.junit.jupiter.engine)
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
