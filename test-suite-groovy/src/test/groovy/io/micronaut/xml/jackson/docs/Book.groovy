@@ -1,7 +1,7 @@
 package io.micronaut.xml.jackson.docs
 
 import io.micronaut.core.annotation.Introspected
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
 import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @Introspected

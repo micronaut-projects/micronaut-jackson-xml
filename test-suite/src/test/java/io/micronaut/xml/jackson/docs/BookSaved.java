@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 @JacksonXmlRootElement(localName = "book")
 @Introspected
