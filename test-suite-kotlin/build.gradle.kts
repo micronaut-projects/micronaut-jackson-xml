@@ -1,12 +1,10 @@
 plugins {
     id("io.micronaut.build.internal.jackson-xml-examples")
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.kapt)
+    id("io.micronaut.build.internal.kotlin-kapt")
 }
 
 dependencies {
     kaptTest(mn.micronaut.inject.java)
-    testImplementation(libs.kotlin.stdlib.jdk8)
 
     testImplementation(platform(mn.micronaut.core.bom))
     testImplementation(mnTest.micronaut.test.junit5)
@@ -20,10 +18,4 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
 }
