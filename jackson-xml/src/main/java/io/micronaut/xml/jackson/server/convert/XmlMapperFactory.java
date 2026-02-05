@@ -16,14 +16,18 @@
 package io.micronaut.xml.jackson.server.convert;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.*;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import tools.jackson.databind.jsontype.PolymorphicTypeValidator;
+import tools.jackson.databind.deser.ValueDeserializerModifier;
+import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.ser.ValueSerializerModifier;
+import tools.jackson.dataformat.xml.XmlFactory;
+import tools.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.dataformat.xml.XmlWriteFeature;
+import tools.jackson.module.kotlin.KotlinModule;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Type;
@@ -39,7 +43,6 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Optional;
@@ -58,161 +61,207 @@ import java.util.TimeZone;
 @Factory
 @BootstrapContextCompatible
 public class XmlMapperFactory {
+
     @Inject
     protected ConversionService conversionService;
 
     @Inject
-    // has to be fully qualified due to JDK Module type
-    protected com.fasterxml.jackson.databind.Module[] jacksonModules = new com.fasterxml.jackson.databind.Module[0];
+    protected JacksonModule[] jacksonModules = new JacksonModule[0];
 
     @Inject
-    protected JsonSerializer[] serializers = new JsonSerializer[0];
+    protected ValueSerializer[] serializers = new ValueSerializer[0];
 
     @Inject
-    protected JsonDeserializer[] deserializers = new JsonDeserializer[0];
+    protected ValueDeserializer[] deserializers = new ValueDeserializer[0];
 
     @Inject
-    protected BeanSerializerModifier[] beanSerializerModifiers = new BeanSerializerModifier[0];
+    protected ValueSerializerModifier[] beanSerializerModifiers = new ValueSerializerModifier[0];
 
     @Inject
-    protected BeanDeserializerModifier[] beanDeserializerModifiers = new BeanDeserializerModifier[0];
+    protected ValueDeserializerModifier[] beanDeserializerModifiers = new ValueDeserializerModifier[0];
 
     @Inject
     protected KeyDeserializer[] keyDeserializers = new KeyDeserializer[0];
 
     /**
-     * Builds the core Jackson {@link ObjectMapper} from the optional configuration and {@link com.fasterxml.jackson.core.JsonFactory}.
+     * Factory method to create the XmlMapper.
      *
-     * @param jacksonConfiguration The configuration
-     * @param xmlConfiguration The XML configuration
-     * @return The {@link ObjectMapper}
+     * @param jacksonConfiguration The general Jackson configuration
+     * @param xmlConfiguration The XML-specific configuration
+     * @return A configured XmlMapper
+     * @implSpec This method creates an XmlMapper using the builder pattern,
+     * applies Micronaut-specific modules, and configures serialization/deserialization
+     * settings based on the provided configuration beans.
      */
     @Singleton
     @BootstrapContextCompatible
     @Named("xml")
-    public XmlMapper xmlMapper(@Nullable JacksonConfiguration jacksonConfiguration, @Nullable JacksonXmlConfiguration xmlConfiguration) {
+    public XmlMapper xmlMapper(
+        @Nullable JacksonConfiguration jacksonConfiguration,
+        @Nullable JacksonXmlConfiguration xmlConfiguration) {
 
-        final boolean hasXmlConfiguration = xmlConfiguration != null;
-        JacksonXmlModule xmlModule = new JacksonXmlModule();
-        if (hasXmlConfiguration) {
-            xmlModule.setDefaultUseWrapper(xmlConfiguration.isDefaultUseWrapper());
+        boolean hasJacksonConfig = jacksonConfiguration != null;
+        boolean hasXmlConfig = xmlConfiguration != null;
+
+        XmlFactory xmlFactory = XmlFactory.builder().build();
+        XmlMapper.Builder builder = XmlMapper.builder(xmlFactory);
+
+        /* ---------- XML-specific config ---------- */
+
+        if (hasXmlConfig) {
+            builder.defaultUseWrapper(xmlConfiguration.isDefaultUseWrapper());
         }
 
-        XmlMapper objectMapper = new XmlMapper(xmlModule);
-
-        final boolean hasConfiguration = jacksonConfiguration != null;
-        if (!hasConfiguration || jacksonConfiguration.isModuleScan()) {
-            objectMapper.findAndRegisterModules();
+        /* ---------- Modules ---------- */
+        builder.addModule(new KotlinModule.Builder().build());
+        for (JacksonModule module : jacksonModules) {
+            builder.addModule(module);
         }
-        objectMapper.registerModules(jacksonModules);
-        SimpleModule module = new SimpleModule("micronaut");
-        module.setDeserializers(new MicronautDeserializers(conversionService));
 
-        for (JsonSerializer serializer : serializers) {
-            Class<? extends JsonSerializer> type = serializer.getClass();
+        SimpleModule micronautModule = new SimpleModule("micronaut");
+        micronautModule.setDeserializers(new MicronautDeserializers(conversionService));
+
+        /* ---------- Serializers ---------- */
+
+        for (ValueSerializer<?> serializer : serializers) {
+            Class<?> type = serializer.getClass();
             Type annotation = type.getAnnotation(Type.class);
+
             if (annotation != null) {
-                Class<?>[] value = annotation.value();
-                for (Class<?> aClass : value) {
-                    module.addSerializer(aClass, serializer);
+                for (Class<?> target : annotation.value()) {
+                    micronautModule.addSerializer((Class) target, (ValueSerializer) serializer);
                 }
             } else {
-                Optional<Class<?>> targetType = GenericTypeUtils.resolveSuperGenericTypeArgument(type);
-                if (targetType.isPresent()) {
-                    module.addSerializer(targetType.get(), serializer);
-                } else {
-                    module.addSerializer(serializer);
-                }
+                Optional<Class<?>> targetType =
+                    GenericTypeUtils.resolveSuperGenericTypeArgument(type);
+                targetType.ifPresent(t -> micronautModule.addSerializer((Class) t, (ValueSerializer) serializer));
             }
         }
 
-        for (JsonDeserializer deserializer : deserializers) {
-            Class<? extends JsonDeserializer> type = deserializer.getClass();
+        /* ---------- Deserializers ---------- */
+
+        for (ValueDeserializer<?> deserializer : deserializers) {
+            Class<?> type = deserializer.getClass();
             Type annotation = type.getAnnotation(Type.class);
+
             if (annotation != null) {
-                Class<?>[] value = annotation.value();
-                for (Class<?> aClass : value) {
-                    module.addDeserializer(aClass, deserializer);
+                for (Class<?> target : annotation.value()) {
+                    micronautModule.addDeserializer((Class) target, (ValueDeserializer) deserializer);
                 }
             } else {
-                Optional<Class<?>> targetType = GenericTypeUtils.resolveSuperGenericTypeArgument(type);
-                targetType.ifPresent(aClass -> module.addDeserializer(aClass, deserializer));
+                GenericTypeUtils
+                    .resolveSuperGenericTypeArgument(type)
+                    .ifPresent(t -> micronautModule.addDeserializer((Class) t, (ValueDeserializer) deserializer));
             }
         }
 
-        if (hasConfiguration && jacksonConfiguration.isTrimStrings()) {
-            module.addDeserializer(String.class, new StringDeserializer() {
+        /* ---------- Trim strings ---------- */
+
+        if (hasJacksonConfig && jacksonConfiguration.isTrimStrings()) {
+            micronautModule.addDeserializer(String.class, new ValueDeserializer<String>() {
                 @Override
-                public String deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                    String value = super.deserialize(p, ctxt);
-                    return StringUtils.trimToNull(value);
+                public String deserialize(JsonParser p, DeserializationContext ctxt)
+                    throws JacksonException {
+                    return StringUtils.trimToNull(p.getValueAsString());
                 }
             });
         }
 
+        /* ---------- Key deserializers ---------- */
+
         for (KeyDeserializer keyDeserializer : keyDeserializers) {
-            Class<? extends KeyDeserializer> type = keyDeserializer.getClass();
-            Type annotation = type.getAnnotation(Type.class);
+            Type annotation = keyDeserializer.getClass().getAnnotation(Type.class);
             if (annotation != null) {
-                Class<?>[] value = annotation.value();
-                for (Class<?> clazz : value) {
-                    module.addKeyDeserializer(clazz, keyDeserializer);
+                for (Class<?> target : annotation.value()) {
+                    micronautModule.addKeyDeserializer(target, keyDeserializer);
                 }
             }
         }
-        objectMapper.registerModule(module);
 
-        for (BeanSerializerModifier beanSerializerModifier : beanSerializerModifiers) {
-            objectMapper.setSerializerFactory(
-                    objectMapper.getSerializerFactory().withSerializerModifier(
-                            beanSerializerModifier
-                    ));
+        /* ---------- Modifiers ---------- */
+
+        for (ValueSerializerModifier modifier : beanSerializerModifiers) {
+            micronautModule.setSerializerModifier(modifier);
         }
 
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-        objectMapper.configure(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS, true);
+        for (ValueDeserializerModifier modifier : beanDeserializerModifiers) {
+            micronautModule.setDeserializerModifier(modifier);
+        }
 
-        if (hasConfiguration) {
+        builder.addModule(micronautModule);
 
-            ObjectMapper.DefaultTyping defaultTyping = jacksonConfiguration.getDefaultTyping();
-            if (defaultTyping != null) {
-                objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), defaultTyping);
-            }
+        /* ---------- Core features ---------- */
 
-            JsonInclude.Include include = jacksonConfiguration.getSerializationInclusion();
+        builder.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        builder.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        builder.enable(DeserializationFeature.UNWRAP_SINGLE_VALUE_ARRAYS);
+
+        /* ---------- Polymorphic typing ---------- */
+
+        if (hasJacksonConfig && jacksonConfiguration.getDefaultTyping() != null) {
+            PolymorphicTypeValidator ptv =
+                BasicPolymorphicTypeValidator.builder()
+                    .allowIfSubType(Object.class)
+                    .build();
+
+            builder.activateDefaultTyping(ptv, jacksonConfiguration.getDefaultTyping());
+        }
+
+        /* ---------- General Jackson config ---------- */
+
+        if (hasJacksonConfig) {
+
+            JsonInclude.Include include =
+                jacksonConfiguration.getSerializationInclusion();
             if (include != null) {
-                objectMapper.setSerializationInclusion(include);
+                builder.changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(include));
             }
+
             String dateFormat = jacksonConfiguration.getDateFormat();
             if (dateFormat != null) {
-                objectMapper.setDateFormat(new SimpleDateFormat(dateFormat));
+                builder.defaultDateFormat(new SimpleDateFormat(dateFormat));
             }
+
             Locale locale = jacksonConfiguration.getLocale();
             if (locale != null) {
-                objectMapper.setLocale(locale);
+                builder.defaultLocale(locale);
             }
+
             TimeZone timeZone = jacksonConfiguration.getTimeZone();
             if (timeZone != null) {
-                objectMapper.setTimeZone(timeZone);
-            }
-            PropertyNamingStrategy propertyNamingStrategy = jacksonConfiguration.getPropertyNamingStrategy();
-            if (propertyNamingStrategy != null) {
-                objectMapper.setPropertyNamingStrategy(propertyNamingStrategy);
+                builder.defaultTimeZone(timeZone);
             }
 
-            jacksonConfiguration.getSerializationSettings().forEach(objectMapper::configure);
-            jacksonConfiguration.getDeserializationSettings().forEach(objectMapper::configure);
-            jacksonConfiguration.getMapperSettings().forEach(objectMapper::configure);
-            jacksonConfiguration.getParserSettings().forEach(objectMapper::configure);
-            jacksonConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
+            PropertyNamingStrategy namingStrategy =
+                jacksonConfiguration.getPropertyNamingStrategy();
+            if (namingStrategy != null) {
+                builder.propertyNamingStrategy(namingStrategy);
+            }
         }
 
-        if (hasXmlConfiguration) {
-            xmlConfiguration.getParserSettings().forEach(objectMapper::configure);
-            xmlConfiguration.getGeneratorSettings().forEach(objectMapper::configure);
+        /* ---------- XML configuration ---------- */
+
+        if (hasXmlConfig) {
+            xmlConfiguration.getParserSettings().forEach((feature, enabled) -> {
+                if (enabled) {
+                    builder.enable(feature);
+                } else {
+                    builder.disable(feature);
+                }
+            });
+            xmlConfiguration.getGeneratorSettings().forEach((feature, enabled) -> {
+                if (enabled) {
+                    builder.enable(feature);
+                } else {
+                    builder.disable(feature);
+                }
+            });
+        } else {
+            builder.disable(XmlWriteFeature.WRITE_XML_DECLARATION);
         }
 
-        return objectMapper;
+        builder.disable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+
+        return builder.build();
     }
 }

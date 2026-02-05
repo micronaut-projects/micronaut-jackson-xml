@@ -15,7 +15,7 @@
  */
 package io.micronaut.xml.jackson.codec
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.ObjectMapper
 import io.micronaut.context.ApplicationContext
 import io.micronaut.http.MediaType
 import spock.lang.Specification

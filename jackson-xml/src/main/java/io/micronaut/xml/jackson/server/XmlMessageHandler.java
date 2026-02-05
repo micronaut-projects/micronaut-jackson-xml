@@ -15,10 +15,10 @@
  */
 package io.micronaut.xml.jackson.server;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.type.TypeFactory;
+import tools.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.convert.value.ConvertibleValues;
@@ -93,11 +93,7 @@ final class XmlMessageHandler<T> implements MessageBodyHandler<T> {
     @Override
     public void writeTo(Argument<T> type, MediaType mediaType, T object, MutableHeaders outgoingHeaders, OutputStream outputStream) throws CodecException {
         outgoingHeaders.set(HttpHeaders.CONTENT_TYPE, mediaType != null ? mediaType : MediaType.APPLICATION_XML_TYPE);
-        try {
-            objectMapper.writerFor(constructType(type, objectMapper.getTypeFactory())).writeValue(outputStream, object);
-        } catch (IOException e) {
-            throw decorateWrite(object, e);
-        }
+        objectMapper.writerFor(constructType(type, objectMapper.getTypeFactory())).writeValue(outputStream, object);
     }
 
     // from micronaut-jackson-databind

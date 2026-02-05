@@ -15,7 +15,8 @@
  */
 package io.micronaut.xml.jackson.codec;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.cfg.MapperBuilder;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.MediaType;
@@ -54,10 +55,23 @@ public class XmlMediaTypeCodec extends JacksonMediaTypeCodec {
 
     @Override
     public JacksonMediaTypeCodec cloneWithFeatures(JacksonFeatures jacksonFeatures) {
-        ObjectMapper objectMapper = this.getObjectMapper().copy();
-        jacksonFeatures.getDeserializationFeatures().forEach(objectMapper::configure);
-        jacksonFeatures.getSerializationFeatures().forEach(objectMapper::configure);
+        MapperBuilder<?, ?> builder = this.getObjectMapper().rebuild();
+        jacksonFeatures.getDeserializationFeatures().forEach((feature, enabled) -> {
+            if (enabled) {
+                builder.enable(feature);
+            } else {
+                builder.disable(feature);
+            }
+        });
+        jacksonFeatures.getSerializationFeatures().forEach((feature, enabled) -> {
+            if (enabled) {
+                builder.enable(feature);
+            } else {
+                builder.disable(feature);
+            }
+        });
+        ObjectMapper newMapper = builder.build();
 
-        return new XmlMediaTypeCodec(objectMapper, applicationConfiguration, codecConfiguration);
+        return new XmlMediaTypeCodec(newMapper, applicationConfiguration, codecConfiguration);
     }
 }

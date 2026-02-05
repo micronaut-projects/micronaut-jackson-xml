@@ -15,9 +15,9 @@
  */
 package io.micronaut.xml.jackson;
 
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
-import com.fasterxml.jackson.dataformat.xml.deser.FromXmlParser;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+import tools.jackson.dataformat.xml.JacksonXmlAnnotationIntrospector;
+import tools.jackson.dataformat.xml.XmlReadFeature;
+import tools.jackson.dataformat.xml.XmlWriteFeature;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.core.util.CollectionUtils;
@@ -37,14 +37,14 @@ import java.util.Map;
         LinkedHashMap.class,
     })
 public class JacksonXmlConfiguration {
-    private Map<FromXmlParser.Feature, Boolean> parser = Collections.emptyMap();
-    private Map<ToXmlGenerator.Feature, Boolean> generator = Collections.emptyMap();
+    private Map<XmlReadFeature, Boolean> parser = Collections.emptyMap();
+    private Map<XmlWriteFeature, Boolean> generator = Collections.emptyMap();
     private boolean defaultUseWrapper = JacksonXmlAnnotationIntrospector.DEFAULT_USE_WRAPPER;
 
     /**
      * @return Settings for the parser
      */
-    public Map<FromXmlParser.Feature, Boolean> getParserSettings() {
+    public Map<XmlReadFeature, Boolean> getParserSettings() {
         return parser;
     }
 
@@ -52,7 +52,7 @@ public class JacksonXmlConfiguration {
      * Sets the parser features to use.
      * @param parser The parser features
      */
-    public void setParser(Map<FromXmlParser.Feature, Boolean> parser) {
+    public void setParser(Map<XmlReadFeature, Boolean> parser) {
         if (CollectionUtils.isNotEmpty(parser)) {
             this.parser = parser;
         }
@@ -61,7 +61,7 @@ public class JacksonXmlConfiguration {
     /**
      * @return Settings for the generator
      */
-    public Map<ToXmlGenerator.Feature, Boolean> getGeneratorSettings() {
+    public Map<XmlWriteFeature, Boolean> getGeneratorSettings() {
         return generator;
     }
 
@@ -69,7 +69,7 @@ public class JacksonXmlConfiguration {
      * Sets the generator features to use.
      * @param generator The generator features
      */
-    public void setGenerator(Map<ToXmlGenerator.Feature, Boolean> generator) {
+    public void setGenerator(Map<XmlWriteFeature, Boolean> generator) {
         if (CollectionUtils.isNotEmpty(generator)) {
             this.generator = generator;
         }
@@ -77,7 +77,7 @@ public class JacksonXmlConfiguration {
 
     /**
      * @return True if default wrapper is used
-     * */
+     */
     public boolean isDefaultUseWrapper() {
         return defaultUseWrapper;
     }

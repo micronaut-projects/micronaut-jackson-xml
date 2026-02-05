@@ -15,19 +15,23 @@
  */
 package io.micronaut.xml.jackson.server.convert;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import io.micronaut.core.util.SupplierUtil;
+import tools.jackson.core.exc.JacksonIOException;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.dataformat.xml.XmlMapper;
 import io.micronaut.core.convert.ArgumentConversionContext;
-import io.micronaut.core.convert.ConversionService;
 import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.core.reflect.ClassUtils;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.jackson.JacksonConfiguration;
+import io.micronaut.core.util.SupplierUtil;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
@@ -47,7 +51,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
 
     private final ByteArrayXmlStreamReader stream;
     private final XmlMapper xmlMapper;
-    private final ConversionService conversionService;
+    private final io.micronaut.core.convert.ConversionService conversionService;
     private final Supplier<JsonNode> objectNode;
 
     /**
@@ -57,14 +61,14 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
      */
     public XmlStreamConvertibleValues(ByteArrayXmlStreamReader stream,
                                       XmlMapper xmlMapper,
-                                      ConversionService conversionService) {
+                                      io.micronaut.core.convert.ConversionService conversionService) {
         this.stream = stream;
         this.xmlMapper = xmlMapper;
         this.conversionService = conversionService;
         this.objectNode = SupplierUtil.memoized(() -> {
             try {
                 return xmlMapper.readTree(stream.getBytes());
-            } catch (IOException e) {
+            } catch (JacksonIOException e) {
                 if (LOG.isErrorEnabled()) {
                     LOG.error("Failed to read the xml stream as a tree", e);
                 }
@@ -76,16 +80,19 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
     @Override
     public Set<String> names() {
         JsonNode jsonNode = objectNode.get();
-        if (jsonNode != null) {
-            Iterator<String> fieldNames = objectNode.get().fieldNames();
-            return CollectionUtils.iteratorToSet(fieldNames);
+        if (jsonNode != null && jsonNode.isObject()) {
+            Set<String> names = new HashSet<>();
+            Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.properties().iterator();            while (fields.hasNext()) {
+                names.add(fields.next().getKey());
+            }
+            return names;
         } else {
             return Collections.emptySet();
         }
     }
 
     @Override
-    public Collection<V> values() {
+    public java.util.Collection<V> values() {
         JsonNode jsonNode = objectNode.get();
         if (jsonNode != null) {
             List<V> values = new ArrayList<>();
@@ -103,9 +110,9 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
         Class<T> type = conversionContext.getArgument().getType();
         //Necessary to process the XML this way for collections because the JsonNode
         //will only keep the last item due to the key being duplicated
-        if (Collection.class.isAssignableFrom(type)) {
+        if (java.util.Collection.class.isAssignableFrom(type)) {
             int depth = -1;
-            JavaType javaType = JacksonConfiguration.constructType(conversionContext.getArgument(), xmlMapper.getTypeFactory());
+            JavaType javaType = io.micronaut.jackson.JacksonConfiguration.constructType(conversionContext.getArgument(), xmlMapper.getTypeFactory());
             String nameString = name.toString();
             try (ByteArrayXmlStreamReader streamReader = stream.reset()) {
                 while (streamReader.hasNext()) {
