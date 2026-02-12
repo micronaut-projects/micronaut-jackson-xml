@@ -24,7 +24,7 @@ class BookControllerTest {
     fun testSavebook() {
         val book = Book("Huckleberry Finn")
         val result = client.save(book)
-        Assertions.assertNotNull(result)
+        assertNotNull(result)
         Assertions.assertEquals("Huckleberry Finn", result.name)
         Assertions.assertTrue(StringUtils.isNotEmpty(result.isbn))
 
