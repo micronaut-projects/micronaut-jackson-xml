@@ -27,7 +27,6 @@ import tools.jackson.databind.ser.ValueSerializerModifier;
 import tools.jackson.dataformat.xml.XmlFactory;
 import tools.jackson.dataformat.xml.XmlMapper;
 import tools.jackson.dataformat.xml.XmlWriteFeature;
-import tools.jackson.module.kotlin.KotlinModule;
 import io.micronaut.context.annotation.BootstrapContextCompatible;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Type;
@@ -104,7 +103,7 @@ public class XmlMapperFactory {
         boolean hasXmlConfig = xmlConfiguration != null;
 
         XmlFactory xmlFactory = XmlFactory.builder().build();
-        XmlMapper.Builder builder = XmlMapper.builder(xmlFactory);
+        XmlMapper.Builder builder = XmlMapper.builder(xmlFactory).findAndAddModules();
 
         /* ---------- XML-specific config ---------- */
 
@@ -113,7 +112,7 @@ public class XmlMapperFactory {
         }
 
         /* ---------- Modules ---------- */
-        builder.addModule(new KotlinModule.Builder().build());
+
         for (JacksonModule module : jacksonModules) {
             builder.addModule(module);
         }
