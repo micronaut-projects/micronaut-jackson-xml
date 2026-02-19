@@ -14,6 +14,7 @@ dependencies {
     testImplementation(projects.micronautJacksonXml)
     testRuntimeOnly(mnLogging.logback.classic)
     testRuntimeOnly(mnTest.junit.platform.launcher)
+    testRuntimeOnly("tools.jackson.module:jackson-module-kotlin")
 }
 
 tasks.withType<Test> {

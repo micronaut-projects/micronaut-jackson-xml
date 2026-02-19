@@ -7,7 +7,6 @@ dependencies {
     api(mn.micronaut.jackson.databind)
     api(mn.micronaut.inject)
     api(mn.micronaut.http)
-    implementation("tools.jackson.module:jackson-module-kotlin")
     testImplementation(libs.jaxb.api)
     compileOnly(mn.micronaut.http.server.netty)
     testImplementation(mn.reactor)
