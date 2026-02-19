@@ -1,11 +1,44 @@
 [
   {
-    "name": "io.micronaut.xml.jackson.graal.BookSaved",
-    "queryAllDeclaredMethods": true,
-    "condition": {
-      "typeReachable": "com.fasterxml.jackson.databind.ObjectMapper"
-    },
+    "name": "io.micronaut.xml.jackson.graal.Book",
+    "allDeclaredConstructors": true,
     "allDeclaredFields": true,
-    "queryAllDeclaredConstructors": true
+    "allDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true
+  },
+  {
+    "name": "io.micronaut.xml.jackson.graal.BookSaved",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true
+  },
+  {
+    "name": "tools.jackson.dataformat.xml.XmlMapper",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "tools.jackson.dataformat.xml.XmlFactory",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "javax.xml.datatype.XMLGregorianCalendar",
+    "allDeclaredMethods": true,
+    "queryAllDeclaredMethods": true
+  },
+  {
+    "name": "com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true,
+    "unsafeAllocated": true
   }
 ]

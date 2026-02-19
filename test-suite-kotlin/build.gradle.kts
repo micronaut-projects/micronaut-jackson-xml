@@ -1,13 +1,10 @@
 plugins {
     id("io.micronaut.build.internal.jackson-xml-examples")
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.kapt)
-    id("io.micronaut.build.internal.kotlin-base")
+    id("io.micronaut.build.internal.kotlin-kapt")
 }
 
 dependencies {
     kaptTest(mn.micronaut.inject.java)
-    testImplementation(libs.kotlin.stdlib.jdk8)
 
     testImplementation(platform(mn.micronaut.core.bom))
     testImplementation(mnTest.micronaut.test.junit5)
@@ -16,10 +13,10 @@ dependencies {
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
     testRuntimeOnly(mnLogging.logback.classic)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly(mnTest.junit.platform.launcher)
+    testRuntimeOnly("tools.jackson.module:jackson-module-kotlin")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-

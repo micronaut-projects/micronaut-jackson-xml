@@ -12,8 +12,8 @@ dependencies {
     testImplementation(mn.micronaut.http.client)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(projects.micronautJacksonXml)
+    testRuntimeOnly(mnTest.junit.platform.launcher)
     testRuntimeOnly(mnLogging.logback.classic)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {

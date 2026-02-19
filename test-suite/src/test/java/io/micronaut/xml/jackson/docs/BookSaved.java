@@ -1,7 +1,7 @@
 package io.micronaut.xml.jackson.docs;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
 import org.jspecify.annotations.NonNull;
 
@@ -22,12 +22,8 @@ public class BookSaved {
     }
 
     @NonNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     @NonNull
-    public String getIsbn() {
-        return isbn;
-    }
+    public String getIsbn() { return isbn; }
 }

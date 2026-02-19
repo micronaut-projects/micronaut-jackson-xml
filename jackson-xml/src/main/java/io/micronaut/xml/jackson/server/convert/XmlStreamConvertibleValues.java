@@ -15,18 +15,17 @@
  */
 package io.micronaut.xml.jackson.server.convert;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import io.micronaut.core.util.SupplierUtil;
-import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.convert.ConversionService;
+import io.micronaut.jackson.JacksonConfiguration;
+import tools.jackson.core.exc.JacksonIOException;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.dataformat.xml.XmlMapper;
+import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.core.reflect.ClassUtils;
-import io.micronaut.core.util.CollectionUtils;
-import io.micronaut.jackson.JacksonConfiguration;
+import io.micronaut.core.util.SupplierUtil;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -64,7 +63,7 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
         this.objectNode = SupplierUtil.memoized(() -> {
             try {
                 return xmlMapper.readTree(stream.getBytes());
-            } catch (IOException e) {
+            } catch (JacksonIOException e) {
                 if (LOG.isErrorEnabled()) {
                     LOG.error("Failed to read the xml stream as a tree", e);
                 }
@@ -76,9 +75,13 @@ public class XmlStreamConvertibleValues<V> implements ConvertibleValues<V> {
     @Override
     public Set<String> names() {
         JsonNode jsonNode = objectNode.get();
-        if (jsonNode != null) {
-            Iterator<String> fieldNames = objectNode.get().fieldNames();
-            return CollectionUtils.iteratorToSet(fieldNames);
+        if (jsonNode != null && jsonNode.isObject()) {
+            Set<String> names = new HashSet<>();
+            Iterator<Map.Entry<String, JsonNode>> fields = jsonNode.properties().iterator();
+            while (fields.hasNext()) {
+                names.add(fields.next().getKey());
+            }
+            return names;
         } else {
             return Collections.emptySet();
         }

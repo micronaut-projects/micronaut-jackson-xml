@@ -1,8 +1,8 @@
 package io.micronaut.xml.jackson.docs;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import io.micronaut.core.annotation.Introspected
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @JacksonXmlRootElement(localName = "book")
 @Introspected

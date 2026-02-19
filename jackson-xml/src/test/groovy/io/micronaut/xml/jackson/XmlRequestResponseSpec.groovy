@@ -64,7 +64,7 @@ class XmlRequestResponseSpec extends Specification {
 
         then:
         HttpClientResponseException exception = thrown()
-        exception.response.getBody(Map).get()._embedded.errors[0].message.contains "Failed to convert argument [xmlModel] for value [null] due to: Unexpected character '>' (code 62)"
+        exception.response.getBody(Map).get()._embedded.errors[0].message.contains "Invalid JSON: Unexpected character '>' (code 62)"
     }
 
     @Client('/media/xml/')
