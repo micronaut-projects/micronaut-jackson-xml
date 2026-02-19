@@ -1,8 +1,5 @@
 package io.micronaut.xml.jackson.docs;
 
-// 1. Update this import to Jackson 3
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
@@ -19,10 +16,7 @@ public class BookSaved {
     @JacksonXmlProperty(isAttribute = true)
     private final String isbn;
 
-    @JsonCreator
-    public BookSaved(
-        @JsonProperty("name") String name,
-        @JsonProperty("isbn") String isbn) {
+    public BookSaved(String name, String isbn) {
         this.name = name;
         this.isbn = isbn;
     }
