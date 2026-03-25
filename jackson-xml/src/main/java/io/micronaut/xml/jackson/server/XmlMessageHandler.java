@@ -15,7 +15,6 @@
  */
 package io.micronaut.xml.jackson.server;
 
-import tools.jackson.core.exc.JacksonIOException;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.type.TypeFactory;
