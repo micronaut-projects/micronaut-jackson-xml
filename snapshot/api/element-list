@@ -1,3 +1,2 @@
-io.micronaut.xml.info
 io.micronaut.xml.jackson
 io.micronaut.xml.jackson.server.convert

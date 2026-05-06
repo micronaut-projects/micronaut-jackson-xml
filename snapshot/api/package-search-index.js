@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"io.micronaut.xml.info"},{"l":"io.micronaut.xml.jackson"},{"l":"io.micronaut.xml.jackson.server.convert"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"io.micronaut.xml.jackson"},{"l":"io.micronaut.xml.jackson.server.convert"}];updateSearchResults();
