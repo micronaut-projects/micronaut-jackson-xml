@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="../css/multi-language-sample.css"/>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script type="text/javascript">
         function addJsClass(el) {
             var classes = document.body.className.split(" ");
@@ -23,7 +23,9 @@
             document.body.className = classes.join(" ");
         }
     </script>
-
+    <style type="text/css">
+        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; 
+    </style>
 </head>
 
 <body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
@@ -105,13 +107,13 @@
         <h1>Micronaut Jackson XML</h1>
         <p></p>
         <p>Jackson XML support for Micronaut</p>
-        <p><strong>Version:</strong> 4.7.0 </p>
+        <p><strong>Version:</strong> 5.0.0 </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -127,7 +129,7 @@
 <h1 id="dependency"><a class="anchor" href="#dependency"></a>2 Dependency</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/dependency.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/dependency.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -150,7 +152,8 @@
     &lt;artifactId&gt;micronaut-jackson-xml&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 <div class="paragraph">
 <p>See the <a href="https://github.com/FasterXML/jackson-dataformat-xml">Jackson XML</a> documentation for more information.</p>
@@ -159,7 +162,7 @@
 <h1 id="example"><a class="anchor" href="#example"></a>3 Example</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/example.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/example.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -182,7 +185,7 @@
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
@@ -193,11 +196,23 @@ public record Book(String name) {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.core.annotation.Introspected
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+
+@Introspected
+@JacksonXmlRootElement(localName = "book")
+data class Book(val name: String)</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import io.micronaut.core.annotation.Introspected
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @Introspected
 @JacksonXmlRootElement(localName = "book")
@@ -205,18 +220,6 @@ class Book {
     @NonNull
     String name
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
-
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import io.micronaut.core.annotation.Introspected
-
-@Introspected
-@JacksonXmlRootElement(localName = "book")
-data class Book(val name: String)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -236,10 +239,10 @@ data class Book(val name: String)</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package io.micronaut.xml.jackson.docs;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 
 @JacksonXmlRootElement(localName = "book")
 @Introspected
@@ -258,25 +261,34 @@ public class BookSaved {
     }
 
     @NonNull
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     @NonNull
-    public String getIsbn() {
-        return isbn;
-    }
+    public String getIsbn() { return isbn; }
 }</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs;
+
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import io.micronaut.core.annotation.Introspected
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+
+@JacksonXmlRootElement(localName = "book")
+@Introspected
+data class BookSaved(val name: String, @field:JacksonXmlProperty(isAttribute = true) val isbn: String)</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import io.micronaut.core.annotation.Introspected
-import io.micronaut.core.annotation.NonNull
+import org.jspecify.annotations.NonNull
 
 @JacksonXmlRootElement(localName = "book")
 @Introspected
@@ -287,19 +299,6 @@ class BookSaved {
     @JacksonXmlProperty(isAttribute = true)
     String isbn
 }</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs;
-
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
-import io.micronaut.core.annotation.Introspected
-
-@JacksonXmlRootElement(localName = "book")
-@Introspected
-data class BookSaved(val name: String, @field:JacksonXmlProperty(isAttribute = true) val isbn: String)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -332,6 +331,28 @@ public class BookController {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
+import java.util.*
+
+@Controller
+class BookController {
+
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    fun save(@Body book: Book) = BookSaved(book.name, UUID.randomUUID().toString())
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs;
 
 import io.micronaut.http.MediaType;
@@ -350,28 +371,6 @@ class BookController {
     BookSaved save(@Body Book book) {
         new BookSaved(name: book.getName(), isbn: UUID.randomUUID().toString())
     }
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
-
-import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Consumes
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Produces
-import java.util.*
-
-@Controller
-class BookController {
-
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    @Post("/book")
-    fun save(@Body book: Book) = BookSaved(book.name, UUID.randomUUID().toString())
 }</code></pre>
 </div>
 </div>
@@ -400,26 +399,6 @@ public interface BookClient {
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
-
-import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Consumes
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Produces
-import io.micronaut.http.client.annotation.Client
-
-@Client("/")
-interface BookClient {
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    @Post("/book")
-    BookSaved save(@Body Book book)
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">package io.micronaut.xml.jackson.docs
 
 import io.micronaut.http.MediaType
@@ -440,11 +419,31 @@ interface BookClient {
 }</code></pre>
 </div>
 </div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">package io.micronaut.xml.jackson.docs
+
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Consumes
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Produces
+import io.micronaut.http.client.annotation.Client
+
+@Client("/")
+interface BookClient {
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Post("/book")
+    BookSaved save(@Body Book book)
+}</code></pre>
+</div>
+</div>
 
 <h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -460,7 +459,7 @@ interface BookClient {
 <h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -476,7 +475,7 @@ interface BookClient {
 <h1 id="breaks"><a class="anchor" href="#breaks"></a>6 Breaking Changes</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/4.7.x/src/main/docs/guide/breaks.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-jackson-xml/edit/5.0.x/src/main/docs/guide/breaks.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
