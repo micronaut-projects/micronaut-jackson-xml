@@ -25,6 +25,9 @@ You could define a POJO such as the following:
 
 snippet::io.micronaut.xml.jackson.docs.BookSaved[]
 
+[.lang-python]
+WARNING: Jackson reads the `@JacksonXmlRootElement` and `@JacksonXmlProperty` annotations reflectively from the Java class of the model, which the Java class generated for a Python class does not expose yet. With the current Python compiler release the root element of a Python model is therefore its class name and `isbn` is written as a child element instead of an attribute; the Python snippets document the intended programming model.
+
 To receive and send XML from a Micronaut Controller, you can specify the `Accept` HTTP header and the response `Content-Type` with the
 https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Produces.html[`@Produces`] and https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Consumes.html[`@Consumes`] annotations.
 
