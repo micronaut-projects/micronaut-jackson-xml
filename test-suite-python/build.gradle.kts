@@ -20,9 +20,14 @@ dependencies {
     testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
+micronautBuild {
+    python {
+        // Jackson reads the XML annotations reflectively from the generated Java classes of the models
+        compilerArgs.add("-Amicronaut.introspection.allowReflection=micronaut.xml.jackson.docs.*")
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
     systemProperty("micronaut.python.pool.enabled", "false")
-    // a Truffle host-interop assertion trips on varargs overloads
-    enableAssertions = false
 }

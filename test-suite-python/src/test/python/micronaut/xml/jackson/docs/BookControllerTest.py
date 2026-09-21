@@ -5,7 +5,7 @@ from micronaut.http import HttpRequest, MediaType
 from micronaut.http.client import HttpClient
 from micronaut.http.client.annotation import Client
 from micronaut.test.extensions.junit5.annotation import MicronautTest
-from org.junit.jupiter.api import Disabled, Test
+from org.junit.jupiter.api import Test
 
 from .Book import Book
 from .BookClient import BookClient
@@ -27,10 +27,6 @@ class BookControllerTest:
         assert result.name == "Huckleberry Finn"
         assert result.isbn
 
-    # TODO(python): Jackson reads @JacksonXmlRootElement / @JacksonXmlProperty reflectively from the Java class, which the
-    # class generated for a Python dataclass does not carry, so the document is <BookSaved><name>..</name><isbn>..</isbn></BookSaved>
-    # instead of <book isbn=".."><name>..</name></book>. See micronaut/xml/jackson/docs/DISABLED_TESTS.md.
-    @Disabled("TODO(python): Jackson XML annotations of Python classes are not emitted on the generated Java class")
     @Test
     def test_save_book_xml_document(self):
         xml = self.http_client.toBlocking().retrieve(
