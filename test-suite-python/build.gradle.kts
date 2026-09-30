@@ -29,5 +29,4 @@ micronautBuild {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    systemProperty("micronaut.python.pool.enabled", "false")
 }
