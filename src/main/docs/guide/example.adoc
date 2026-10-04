@@ -25,6 +25,9 @@ You could define a POJO such as the following:
 
 snippet::io.micronaut.xml.jackson.docs.BookSaved[]
 
+[.lang-python]
+NOTE: Jackson reads the `@JacksonXmlRootElement` and `@JacksonXmlProperty` annotations reflectively from the Java class of the model, so the Python compiler must be told to keep them on the generated class: add `-Amicronaut.introspection.allowReflection=<package>.*` to the compiler arguments (`micronautBuild { python { compilerArgs.add(...) } }` in Gradle) or annotate the model with `@AllowsReflection` (`micronaut.core.annotation`).
+
 To receive and send XML from a Micronaut Controller, you can specify the `Accept` HTTP header and the response `Content-Type` with the
 https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Produces.html[`@Produces`] and https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Consumes.html[`@Consumes`] annotations.
 
